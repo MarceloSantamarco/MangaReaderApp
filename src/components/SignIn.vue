@@ -1,6 +1,6 @@
 <template>
     <div class="row center">
-        <div class="col m4"></div>
+        <div class="col s4"></div>
         <div class="col s4">
             <div class="card-panel">
                 <h4>Welcome Back!</h4>
@@ -18,7 +18,7 @@
                 </div>
                  <div class="row">
                     <div class="input-field col s12">
-                        <button class='waves-effect waves-light btn btn-large'>Sign In</button>
+                        <button class='waves-effect waves-light btn btn-large pink'>Sign In</button>
                     </div>
                  </div>
                  <div class="row">
@@ -38,6 +38,8 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+.row{
+    color: black;
+}
 </style>

@@ -1,11 +1,11 @@
 <template>
     <nav>
         <div class="nav-wrapper">
-            <a href="#" class="brand-logo"><img src='#' alt='Logo'></a>
+            <a href="#" class="brand-logo left"><img src='#' alt='Logo'></a>
             <ul id="nav-mobile" class="right hide-on-med-and-down">
-                <li><a href="#">Sass</a></li>
-                <li><a href="#">Components</a></li>
-                <li><a href="#">JavaScript</a></li>
+                <li><a href="#">Mangas</a></li>
+                <li><a href="#">Categories</a></li>
+                <li><a href="#">Genres</a></li>
             </ul>
         </div>
     </nav>
@@ -18,5 +18,8 @@ export default {
 </script>
 
 <style scoped>
-
+.nav-wrapper{
+    background-color: #084d6e;
+    color: white;
+}
 </style>
