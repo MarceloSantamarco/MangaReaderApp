@@ -1,22 +1,14 @@
 <template>
   <div id="app">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <Header/>
-    <div class="container">
-      <h4>Read your favorite mangas here with us!</h4>
-      <div class="row center">
-        <div class="col s4"></div>
-        <div class="col s4">
-          <SignIn/>
-        </div>
-      </div>
-    </div>
+    <router-view></router-view>
     <Footer/>
   </div>
 </template>
 
 <script>
 import Header from './components/Header'
-import SignIn from './components/SignIn'
 import Footer from './components/Footer'
 import M from 'materialize-css/dist/js/materialize.js'
 
@@ -24,7 +16,6 @@ export default {
   name: 'App',
   components: {
     Header,
-    SignIn,
     Footer
   },
   mounted(){

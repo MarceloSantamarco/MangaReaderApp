@@ -3,7 +3,7 @@
         <div class="nav-wrapper">
             <a href="#" class="brand-logo left"><img src='#' alt='Logo'></a>
             <ul id="nav-mobile" class="right hide-on-med-and-down">
-                <li><a href="#">Mangas</a></li>
+                <li><router-link to="/mangas">Mangas</router-link></li>
                 <li><a href="#">Categories</a></li>
                 <li><a href="#">Genres</a></li>
             </ul>
@@ -21,5 +21,8 @@ export default {
 .nav-wrapper{
     background-color: #084d6e;
     color: white;
+}
+nav {
+    margin-bottom: 3%
 }
 </style>
