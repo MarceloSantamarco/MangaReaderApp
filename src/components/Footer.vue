@@ -3,8 +3,8 @@
         <div class="container">
             <div class="row">
                 <div class="col l6 s12">
-                <h5 class="white-text">Popular titles</h5>
-                <img src='#' class="grey-text text-lighten-4">
+                    <h5>Popular contributors</h5>
+                    <Contributors/>
                 </div>
                 <div class="col l4 offset-l2 s12">
                 <h5 class="white-text">Questions?</h5>
@@ -18,7 +18,7 @@
         </div>
         <div class="footer-copyright">
             <div class="container">
-                © 2014 Copyright Text
+                © 2020 Copyright Text
                 <a class="grey-text text-lighten-4 right" href="#!">About us</a>
             </div>
         </div>
@@ -26,8 +26,13 @@
 </template>
 
 <script>
+import Contributors from './Contributors'
+
 export default {
-    name: 'Footer'
+    name: 'Footer', 
+    components:{
+        Contributors
+    }
 }
 </script>
 
@@ -35,5 +40,8 @@ export default {
 .page-footer{
     text-align: center;
     background-color: #084d6e;
+}
+.carousel{
+    height: 180px;
 }
 </style>
