@@ -19,12 +19,11 @@ export default {
     Footer
   },
   mounted(){
-    M.AutoInit();
     document.addEventListener('DOMContentLoaded', function() {
+      M.AutoInit();
       M.Slider.init(document.querySelectorAll('.slider'), {indicators: false, height: 500, duration: 200});
-    });
-    document.addEventListener('DOMContentLoaded', function() {
       M.Carousel.init(document.querySelectorAll('.carousel'));
+      M.Dropdown.init(document.querySelectorAll('.dropdown-trigger'));
     });
   }
 }
