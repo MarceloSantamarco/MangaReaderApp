@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import SignIn from './SignIn'
+import SignIn from './components/SignIn'
 
 export default {
     name: 'Home',

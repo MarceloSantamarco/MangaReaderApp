@@ -4,8 +4,7 @@
             <a href="#" class="brand-logo left"><img src='#' alt='Logo'></a>
             <ul id="nav-mobile" class="right hide-on-med-and-down">
                 <li><router-link to="/mangas">Mangas</router-link></li>
-                <li><a href="#">Categories</a></li>
-                <li><a href="#">Genres</a></li>
+                <li><router-link to="/mangas/new">Contribute</router-link></li>
             </ul>
         </div>
     </nav>

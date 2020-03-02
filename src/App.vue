@@ -19,12 +19,7 @@ export default {
     Footer
   },
   mounted(){
-    document.addEventListener('DOMContentLoaded', function() {
-      M.AutoInit();
-      M.Slider.init(document.querySelectorAll('.slider'), {indicators: false, height: 500, duration: 200});
-      M.Carousel.init(document.querySelectorAll('.carousel'));
-      M.Dropdown.init(document.querySelectorAll('.dropdown-trigger'));
-    });
+    M.AutoInit();
   }
 }
 </script>
