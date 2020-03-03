@@ -3,6 +3,7 @@
         <div class="row">
             <div class="col s12">
                 <div class="card-panel">
+                    <h3>Publish a new manga!</h3>
                     <div class="row">
                         <form class="col s12" @submit='sendManga'>
                             <div class="row">

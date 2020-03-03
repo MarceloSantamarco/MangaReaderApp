@@ -15,7 +15,9 @@
             <p>{{ description }}</p>
         </div>
         <div class="card-action">
-            <button class='waves-effect waves-light btn pink'>Ver mais</button>
+            <button class='waves-effect waves-light btn pink'>
+                <router-link to="/mangas/show">Ver mais</router-link>
+            </button>
             <span>
                 <i class="material-icons">star</i>
                 <i class="material-icons">star</i>
