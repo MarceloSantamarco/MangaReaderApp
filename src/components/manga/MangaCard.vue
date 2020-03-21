@@ -1,7 +1,7 @@
 <template>
     <div class="card medium">
         <div class="card-image waves-effect waves-block waves-light">
-            <img class='activator' src="../assets/oi.png">
+            <img class='activator' src="../../assets/oi.png">
             <h6 class="card-title grey-text text-darken-4">{{ title }}</h6>
         </div>
         <div class="card-content activator">

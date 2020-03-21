@@ -4,7 +4,7 @@
             <div class="col s12">
                 <div class="card horizontal">
                     <div class="card-image">
-                        <img src="./assets/oi.png">
+                        <img src="../assets/oi.png">
                     </div>
                     <div class="card-stacked">
                         <h2 class="header">Tokyo Ghoul</h2>
@@ -72,7 +72,7 @@
                 <h4><i class="material-icons inline-icon">comment</i>Comments</h4>
             </li>
             <li class="collection-item avatar">
-                <img src="./assets/user-icon.png" alt="user" class="circle">
+                <img src="../assets/user-icon.png" alt="user" class="circle">
                 <strong><span class="title">José Ramalho</span></strong>
                 <p> Muito TOP !!!! </p>
                 <span class="secondary-content">
@@ -80,7 +80,7 @@
                 </span>
             </li>
             <li class="collection-item avatar">
-                <img src="./assets/user-icon.png" alt="user" class="circle">
+                <img src="../assets/user-icon.png" alt="user" class="circle">
                 <strong><span class="title">Edson Ferreira</span></strong>
                 <p> Achei meio bosta esse final </p>
                 <span class="secondary-content">
@@ -88,7 +88,7 @@
                 </span>
             </li>
             <li class="collection-item avatar">
-                <img src="./assets/user-icon.png" alt="user" class="circle">
+                <img src="../assets/user-icon.png" alt="user" class="circle">
                 <strong><span class="title">Astolfo Antunes</span></strong>
                 <p>Não esperava muito desse mangá mas a história me surpreendeu</p>
                 <span class="secondary-content">

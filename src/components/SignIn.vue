@@ -21,7 +21,7 @@
         <div class="row">
             <div class="input-field col s12">
                 <a href='#'>Forgot your password?</a><br>
-                <a href='#'>Create an account</a>
+                <a href='#'><router-link to="/user/new">Create an account</router-link></a>
             </div>
         </div>
     </div>

@@ -56,16 +56,7 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="file-field input-field col s6">
-                                    <div class="btn-small pink">
-                                        <span>Manga path</span>
-                                        <input type="file" multiple @change='getMangaPath'>
-                                    </div>
-                                    <div class="file-path-wrapper">
-                                        <input class="file-path validate" type="text">
-                                    </div>
-                                </div>
-                                <div class="file-field input-field col s6">
+                                <div class="file-field input-field col s12">
                                     <div class="btn-small pink">
                                         <span>Manga cover</span>
                                         <input type="file" @change="getCover">
@@ -90,6 +81,8 @@
 
 <script>
 import M from 'materialize-css/dist/js/materialize.js'
+import axios from 'axios'
+
 export default {
     name: 'NewManga',
     mounted(){
@@ -104,26 +97,37 @@ export default {
             description: '',
             genres: [],
             category: '',
-            publishedAt: '',
+            published_at: '',
             adult: 0,
-            mangaPath: '',
-            cover: ''
+            cover: {}
         }
     },
     methods:{
-        sendManga(){
-            console.log(this.title, this.author, this.description, this.genres, this.category, this.published_at, 
-            this.adult, this.mangaPath, this.cover);
-        },
-        getMangaPath(){
-            this.mangaPath = event.target.files;
+        sendManga(e){
+            e.preventDefault();
+
+            const comic = { title: this.title, author: this.author, description: this.description, 
+              genres: this.genres, category_id: 1, published_at: this.published_at, 
+              parental_rate: this.adult, cover_image: this.cover }
+
+            axios.post('http://localhost:3000/comics', comic, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then((resp) =>{
+                console.log(resp.data);
+            }).catch(function (error) {
+                console.log(error);
+            });
+
         },
         getCover(){
             this.cover = event.target.files[0];
+            console.log(this.cover);
         },
         dateChanged(){
-            this.publishedAt = M.Datepicker.getInstance(document.querySelector('.datepicker')).toString();
-            console.log(this.publishedAt)
+            this.published_at = M.Datepicker.getInstance(document.querySelector('.datepicker')).toString();
+            console.log(this.published_at)
         }
     }
 }

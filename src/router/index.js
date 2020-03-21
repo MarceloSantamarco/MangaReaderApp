@@ -1,9 +1,10 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '../Home'
-import Mangas from '../Mangas'
-import NewManga from '../NewManga'
-import ShowManga from '../ShowManga'
+import Mangas from '../manga/Mangas'
+import NewManga from '../manga/NewManga'
+import ShowManga from '../manga/ShowManga'
+import NewUser from '../user/NewUser'
 
 Vue.use(Router)
 export default new Router({
@@ -27,6 +28,11 @@ export default new Router({
       path: '/mangas/show',
       name: 'ShowManga',
       component: ShowManga
+    },
+    {
+      path: '/user/new',
+      name: 'NewUser',
+      component: NewUser
     }
   ]
 })

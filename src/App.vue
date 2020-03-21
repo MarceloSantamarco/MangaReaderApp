@@ -2,14 +2,16 @@
   <div id="app">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <Header/>
-    <router-view></router-view>
+    <div class="body">
+      <router-view></router-view>
+    </div>
     <Footer/>
   </div>
 </template>
 
 <script>
-import Header from './components/Header'
-import Footer from './components/Footer'
+import Header from './components/template/Header'
+import Footer from './components/template/Footer'
 import M from 'materialize-css/dist/js/materialize.js'
 
 export default {
@@ -31,5 +33,8 @@ export default {
 .container {
   text-align: center;
   color: white;
+}
+.body{
+  width:100%;
 }
 </style>
