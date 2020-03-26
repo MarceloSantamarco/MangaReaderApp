@@ -20,8 +20,8 @@
         </div>
         <div class="row">
             <div class="input-field col s12">
-                <a href='#'>Forgot your password?</a><br>
-                <a href='#'><router-link to="/user/new">Create an account</router-link></a>
+                <a href='#'><router-link to="/users/password">Forgot your password?</router-link></a><br/>
+                <a href='#'><router-link to="/users/new">Create an account</router-link></a>
             </div>
         </div>
     </div>
