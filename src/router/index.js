@@ -6,6 +6,7 @@ import NewManga from '../manga/NewManga'
 import ShowManga from '../manga/ShowManga'
 import NewUser from '../user/NewUser'
 import UserPassword from '../user/UserPassword'
+import NewAuthor from '../authors/NewAuthor'
 
 Vue.use(Router)
 export default new Router({
@@ -39,6 +40,11 @@ export default new Router({
       path: '/users/password',
       name: 'UserPassword',
       component: UserPassword
+    },
+    {
+      path: '/authors/new',
+      name: 'NewAuthor',
+      component: NewAuthor
     }
   ]
 })

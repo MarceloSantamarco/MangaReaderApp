@@ -27,19 +27,15 @@
                             </div>
                             <div class="row">
                                 <div class="input-field col s4">
-                                    <select multiple v-model='genres'>
+                                    <select multiple v-model='sel_genres'>
                                         <option value="" disabled selected>Genres</option>
-                                        <option value="1">Option 1</option>
-                                        <option value="2">Option 2</option>
-                                        <option value="3">Option 3</option>
+                                        <option v-for='n in genres' :key='n.id' :value='n'>{{n.name}}</option>
                                     </select>
                                 </div>
                                 <div class="input-field col s4">
                                     <select v-model='category'>
                                         <option value="" disabled selected>Category</option>
-                                        <option value="1">Option 1</option>
-                                        <option value="2">Option 2</option>
-                                        <option value="3">Option 3</option>
+                                        <option v-for='n in categories' :key='n.id' :value='n'>{{n.name}}</option>
                                     </select>
                                 </div>
                                 <div class="input-field col s2">
@@ -86,7 +82,12 @@ import axios from 'axios'
 export default {
     name: 'NewManga',
     mounted(){
-        M.Autocomplete.init(document.querySelectorAll('.autocomplete'), {data: {'Sui Ishida': null, 'Akira Toryama': null}});
+        this.getCategories();
+        this.getGenres();
+        this.getAuthors();
+        M.Autocomplete.init(document.querySelectorAll('.autocomplete'), {
+            data: this.authors
+        });
         M.CharacterCounter.init(document.querySelectorAll('#textarea2'));
         M.AutoInit();
     },
@@ -95,26 +96,25 @@ export default {
             title: '',
             author: '',
             description: '',
-            genres: [],
+            sel_genres: [],
             category: '',
             published_at: '',
             adult: 0,
-            cover: {}
+            cover: '',
+            genres: {},
+            categories: {},
+            authors: {}
         }
     },
     methods:{
         sendManga(e){
             e.preventDefault();
 
-            const comic = { title: this.title, author: this.author, description: this.description, 
-              genres: this.genres, category_id: 1, published_at: this.published_at, 
-              parental_rate: this.adult, cover_image: this.cover }
+            const comic = { title: this.title, description: this.description, published_at: this.published_at, 
+                adult: this.adult, cover: this.cover, keys: {genres: this.sel_genres, category_id: 1, author_id: this.author}
+            }
 
-            axios.post('http://localhost:3000/comics', comic, {
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            }).then((resp) =>{
+            axios.post('http://localhost:3000/comics', comic).then((resp) =>{
                 console.log(resp.data);
             }).catch(function (error) {
                 console.log(error);
@@ -128,6 +128,23 @@ export default {
         dateChanged(){
             this.published_at = M.Datepicker.getInstance(document.querySelector('.datepicker')).toString();
             console.log(this.published_at)
+        },
+        getCategories(){
+            axios.get('http://localhost:3000/categories').then((res)=>{
+                this.categories = res.data;
+            })
+        },
+        getGenres(){
+            axios.get('http://localhost:3000/genres').then((res)=>{
+                this.genres = res.data;
+            })
+        },
+        getAuthors(){
+            axios.get('http://localhost:3000/authors').then((res)=>{
+                res.data.map((author)=>{
+                    this.authors[author.name] = null
+                })
+            })
         }
     }
 }
