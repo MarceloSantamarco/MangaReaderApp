@@ -21,23 +21,26 @@
             </div>
             <div class="col s2"></div>
         </div>
+        <div class="row">
+            <AuthorsTable/>
+        </div>
     </div>
 </template>
 
 <script>
 import axios from 'axios'
+import AuthorsTable from '../components/authors/AuthorsTable'
 
 export default {
     name: 'NewAuthor',
+    components: {AuthorsTable},
     data(){
         return{
             name: ''
         }
     },
     methods:{
-        createAuthor(e){
-            e.preventDefault();
-
+        createAuthor(){
             axios.post('http://localhost:3000/authors', {name: this.name}).then((res)=>{
                 console.log(res)
             }).catch((error)=>{
