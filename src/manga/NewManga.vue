@@ -26,16 +26,20 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="input-field col s4">
-                                    <select multiple v-model='sel_genres'>
+                                <div class="col s4">
+                                    <select multiple>
                                         <option value="" disabled selected>Genres</option>
-                                        <option v-for='n in genres' :key='n.id' :value='n'>{{n.name}}</option>
+                                        <option v-for='(n, i) in genres' :key='i' :value='n._id.$oid'>
+                                            {{n.name}}
+                                        </option>
                                     </select>
                                 </div>
                                 <div class="input-field col s4">
-                                    <select v-model='category'>
+                                    <select class="browser-default" v-model='category'>
                                         <option value="" disabled selected>Category</option>
-                                        <option v-for='n in categories' :key='n.id' :value='n'>{{n.name}}</option>
+                                        <option v-for='(n, i) in categories' :key='i' :value='n._id.$oid'>
+                                            {{n.name}}
+                                        </option>
                                     </select>
                                 </div>
                                 <div class="input-field col s2">
@@ -89,6 +93,8 @@ export default {
             data: this.authors
         });
         M.CharacterCounter.init(document.querySelectorAll('#textarea2'));
+        M.Dropdown.init(document.querySelectorAll('.dropdown-trigger'));
+        M.FormSelect.init(document.querySelectorAll('select'));
         M.AutoInit();
     },
     data(){

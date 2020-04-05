@@ -9,27 +9,40 @@
               <div class="row">
                 <div class="col s6 input-field">
                   <i class="material-icons prefix">account_circle</i>
-                  <input type="text" name="name" v-model="name">
-                  <label for="name">Name</label>
+                  <input type="text" name="name" v-model="user.name">
+                  <label for="name" class='active'>Name</label>
                 </div>
                 <div class="col s6 input-field">
                   <i class="material-icons prefix">email</i>
-                  <input type="text" name="email" v-model="email">
-                  <label for="email">Email</label>
+                  <input type="email" name="email" v-model="user.email" class='validate'>
+                  <label for="email" class='active'>Email</label>
+                  <span class="helper-text" data-error="Algo está errado..." data-success="Tudo OK!"></span>
                 </div>
               </div>
               <div class="row">
                 <div class="col s6 input-field">
                   <i class="material-icons prefix">phone</i>
-                  <input type="text" name="phone" v-model="phone">
-                  <label for="phone">Phone</label>
+                  <input type="text" name="phone" v-model="user.phone">
+                  <label for="phone" class='active'>Phone</label>
                 </div>
                 <div class="col s6 input-field">
                   <i class="material-icons prefix">perm_contact_calendar</i>
                   <input type="text" class="datepicker" placeholder='Birthdate' @change="dateChanged">
                 </div>
               </div>
-              <button type='submit' class='btn pink'>Create</button>
+              <div class="row">
+                <div class="col s6 input-field">
+                  <i class="material-icons prefix" @click='showPassword'>{{icon}}</i>
+                  <input :type="fieldType" name="password" v-model="user.password">
+                  <label for="password" class='active'>Password</label>
+                </div>
+                 <div class="col s6 input-field">
+                  <i class="material-icons prefix">lock</i>
+                  <input type="password" name="password_confirmation" v-model="user.password_confirmation">
+                  <label for="password_confirmation" class='active'>Password Confirmation</label>
+                </div>
+              </div>
+              <button type='submit' class='btn pink right'>Create<i class="material-icons right">arrow_forward</i></button>
             </form>
           </div>
         </div>
@@ -41,40 +54,59 @@
 <script>
 import M from 'materialize-css/dist/js/materialize.js'
 import axios from 'axios'
+import {baseApiUrl} from '@/global'
 
 export default {
     name: 'NewUser',
     mounted(){
+      M.updateTextFields();
       M.AutoInit();
     },
     data(){
       return {
-        name: '',
-        email: '',
-        phone: '',
-        birthdate: ''
+        user: {
+          name: '',
+          email: '',
+          phone: '',
+          birthdate: '',
+          password: '',
+          password_confirmation: ''
+        },
+        visible: 0,
+        fieldType: 'password',
+        icon: 'visibility_off'
       }
     },
     methods: {
       dateChanged(){
-        this.birthdate = M.Datepicker.getInstance(document.querySelector('.datepicker')).toString();
-        console.log(this.birthdate)
+        this.user.birthdate = M.Datepicker.getInstance(document.querySelector('.datepicker')).toString();
       },
       sendUser(e){
-        e.preventDefault();
-
-        let user = {name: this.name, email: this.email, phone: this.phone, birthdate: this.birthdate}
-
-        axios.post('http://localhoast:3000/users/new', user).then((res)=>{
-          console.log(res)
+        e.preventDefault()
+        axios.post(`${baseApiUrl}/users`, this.user).then((res)=>{
+          M.toast({html: `${res.message}`, classes: 'rounded green'})
+          this.$router.push('Mangas');
         }).catch((error)=>{
           console.log(error)
+          M.toast({html: `${error}!`, classes: 'rounded red'})
         })
+      },
+      showPassword(){
+        this.visible = !this.visible
+
+        if(this.visible){
+          this.fieldType = 'password'
+          this.icon = 'visibility_off'
+        }
+        else{
+          this.fieldType = 'text'
+          this.icon = 'visibility'
+        }
       }
     }
 }
 </script>
 
-<style>
+<style scoped>
 
 </style>

@@ -13,6 +13,7 @@
 import Header from './components/template/Header'
 import Footer from './components/template/Footer'
 import M from 'materialize-css/dist/js/materialize.js'
+import {mapState} from 'vuex'
 
 export default {
   name: 'App',
@@ -22,7 +23,8 @@ export default {
   },
   mounted(){
     M.AutoInit();
-  }
+  },
+  computed: mapState(['user'])
 }
 </script>
 
