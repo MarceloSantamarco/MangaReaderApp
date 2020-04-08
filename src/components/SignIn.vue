@@ -10,7 +10,7 @@
             </div>
             <div class="row">
                 <div class="input-field col s12">
-                    <input id="password" type="text" class="validate" v-model="user.password">
+                    <input id="password" type="password" class="validate" v-model="user.password">
                     <label for="password">Password</label>
                 </div>
             </div>
@@ -32,6 +32,7 @@
 <script>
 import axios from 'axios'
 import {baseApiUrl, userKey} from '@/global'
+import M from 'materialize-css/dist/js/materialize.js'
 
 export default {
     name: 'SignIn',
@@ -45,13 +46,14 @@ export default {
     },
     methods: {
         signin(e){
+            e.preventDefault()
             axios.post(`${baseApiUrl}/sessions/create`, this.user).then((res)=>{
-                e.preventDefault()
                 this.$store.commit('setUser', res.data)
                 localStorage.setItem(userKey, JSON.stringify(res.data))
-                console.log(res)
+                M.toast({html: `${res.data.success}`, classes: 'rounded green'})
+                this.$router.push('Mangas')
             }).catch((error)=>{
-                console.log(error)
+                M.toast({html: `${error}`, classes: 'rounded red'})
             })
         }
     }
