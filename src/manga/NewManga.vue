@@ -4,7 +4,7 @@
             <div class="col s12">
                 <div class="card-panel">
                     <h3>Publish a new manga!</h3>
-                    <div class="row">
+                    <div v-show='Object.keys(categories).length' class="row">
                         <form class="col s12" @submit='sendManga'>
                             <div class="row">
                                 <div class="input-field col s6">
@@ -26,21 +26,18 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col s4">
-                                    <select multiple>
-                                        <option value="" disabled selected>Genres</option>
-                                        <option v-for='(n, i) in genres' :key='i' :value='n._id.$oid'>
-                                            {{n.name}}
-                                        </option>
-                                    </select>
-                                </div>
                                 <div class="input-field col s4">
-                                    <select class="browser-default" v-model='category'>
+                                    <select name='cats' class='browser-default' v-model='category'>
                                         <option value="" disabled selected>Category</option>
                                         <option v-for='(n, i) in categories' :key='i' :value='n._id.$oid'>
                                             {{n.name}}
                                         </option>
                                     </select>
+                                </div>
+                                <div class="col s4">
+                                    <div class="chips chips-autocomplete chips-placeholder">
+                                        <input name='genres'>
+                                    </div>
                                 </div>
                                 <div class="input-field col s2">
                                     <input type="text" class="datepicker" placeholder='Published at...' @change="dateChanged">
@@ -73,29 +70,50 @@
                             </div>
                         </form>
                     </div>
+                    <div v-show='!Object.keys(categories).length' style='padding: 4%;' class="row">
+                        <Loader/>
+                    </div>
                 </div>
             </div>
-        </div>        
+        </div>
     </div>
 </template>
 
 <script>
 import M from 'materialize-css/dist/js/materialize.js'
 import axios from 'axios'
+import Loader from '../components/Loader'
+import {baseApiUrl} from '@/global'
 
 export default {
     name: 'NewManga',
-    mounted(){
+    components: {Loader},
+    created(){
         this.getCategories();
         this.getGenres();
         this.getAuthors();
-        M.Autocomplete.init(document.querySelectorAll('.autocomplete'), {
-            data: this.authors
+    },
+    mounted(){
+        M.Autocomplete.init(document.querySelectorAll('.autocomplete'), { 
+            data: this.authors,
+            onAutocomplete: (event) => {
+                this.author = event
+            }
         });
         M.CharacterCounter.init(document.querySelectorAll('#textarea2'));
-        M.Dropdown.init(document.querySelectorAll('.dropdown-trigger'));
         M.FormSelect.init(document.querySelectorAll('select'));
-        M.AutoInit();
+        M.Datepicker.init(document.querySelectorAll('.datepicker'));
+        M.Chips.init(document.querySelectorAll('.chips'), {
+            autocompleteOptions: { 
+                data: this.genres,
+                limit: Infinity,
+                minLength: 1
+            },
+            placeholder: 'Tap the genres',
+            onChipAdd: (event) => {
+                this.sel_genres = event[0].M_Chips.chipsData;
+            }
+        });
     },
     data(){
         return {
@@ -113,46 +131,52 @@ export default {
         }
     },
     methods:{
-        sendManga(e){
-            e.preventDefault();
+        sendManga(){
 
-            const comic = { title: this.title, description: this.description, published_at: this.published_at, 
-                adult: this.adult, cover: this.cover, keys: {genres: this.sel_genres, category_id: 1, author_id: this.author}
+            const genres = []
+            this.sel_genres.map((gen)=>{
+                genres.push(gen['tag'])
+            })
+
+            const comic = {
+                title: this.title, description: this.description, 
+                published_at: this.published_at, adult: this.adult
             }
 
-            axios.post('http://localhost:3000/comics', comic).then((resp) =>{
+            axios.post(`${baseApiUrl}/comics`, {comic: comic, genres: genres,
+                author: this.author, category: this.category}).then((resp) =>{
                 console.log(resp.data);
-            }).catch(function (error) {
+            }).catch((error)=>{
                 console.log(error);
             });
-
         },
-        getCover(){
-            this.cover = event.target.files[0];
+        getCover(e){
+            this.cover = e.target.files[0];
             console.log(this.cover);
         },
         dateChanged(){
             this.published_at = M.Datepicker.getInstance(document.querySelector('.datepicker')).toString();
-            console.log(this.published_at)
         },
         getCategories(){
-            axios.get('http://localhost:3000/categories').then((res)=>{
+            axios.get(`${baseApiUrl}/categories`).then((res)=>{
                 this.categories = res.data;
             })
         },
         getGenres(){
-            axios.get('http://localhost:3000/genres').then((res)=>{
-                this.genres = res.data;
+            axios.get(`${baseApiUrl}/genres`).then((res)=>{
+                res.data.map((gen)=>{
+                    this.genres[gen.name] = null
+                })
             })
         },
         getAuthors(){
-            axios.get('http://localhost:3000/authors').then((res)=>{
-                res.data.map((author)=>{
-                    this.authors[author.name] = null
+            axios.get(`${baseApiUrl}/authors`).then((res)=>{
+                res.data.map((aut)=>{
+                    this.authors[aut.name] = null
                 })
             })
         }
-    }
+    } 
 }
 </script>
 
