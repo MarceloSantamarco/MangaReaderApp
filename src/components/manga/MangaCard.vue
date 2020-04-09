@@ -1,5 +1,5 @@
 <template>
-    <div class="card medium">
+    <div v-if='Object.keys(manga).length' class="card medium">
         <div class="card-image waves-effect waves-block waves-light">
             <img class='activator' src="../../assets/oi.png">
             <h6 class="card-title grey-text text-darken-4">{{ manga.title }}</h6>
@@ -30,15 +30,20 @@
             </span>
         </div>
     </div>
+    <div v-else class="card medium">
+        <Loader/>
+    </div>
 </template>
 
 <script>
 import axios from 'axios'
 import {baseApiUrl} from '@/global'
+import Loader from '../Loader'
 
 export default {
     name: 'MangaCard',
     props: ['manga'],
+    components:{Loader},
     mounted(){
         this.getComicGenres()
     },
