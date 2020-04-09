@@ -2,27 +2,21 @@
     <div class="container">
         <div class="row">
             <div class="col s12">
-                <div class="card horizontal">
+                <div v-if='Object.keys(comic) && Object.keys(genres) && author' class="card horizontal">
                     <div class="card-image">
                         <img src="../assets/oi.png">
                     </div>
                     <div class="card-stacked">
-                        <h2 class="header">Tokyo Ghoul</h2>
+                        <h2 class="header">{{comic.title}}</h2>
                         <div class="card-content">
                             <p>
-                                Imagine uma história em que você é o protagonista. Provavelmente seria uma tragédia, não? Pois essa é a 
-                                história de Kaneki... Estranhos assassinatos estão acontecendo em Tokyo. Devido a evidência líquida na cena,
-                                a polícia concluiu que os ataques são resultados de um "comedor" de um tipo vampiro. Kaneki é um jovem de 
-                                18 anos cursando a faculdade, apaixonado por romances japoneses, ele e seu amigo Hide, criam a teoria de 
-                                que os vampiros estão imitando os humanos, por isso nunca foram vistos. Mau eles sabem que essa 
-                                teoria pode ser verdade...
+                                {{comic.description}}
                             </p>
                         </div>
                         <div class="card-content">
                             <p><strong>Author: </strong>
-                                <span>Sui Ishida</span>
+                                <span>{{author}}</span>
                             </p>
-        
                             <p><strong>Status: </strong>
                                 <span>Finalizado</span>
                             </p>
@@ -52,9 +46,14 @@
                             </ul>
                         </div>
                         <div class="card-action">
-                            <p>Seinen, Sobrenatural, Terror, Psicológico</p>
+                            <span v-for='(n,i) in genres' :key='i'>
+                                {{n.name}},
+                            </span>
                         </div>
                     </div>
+                </div>
+                <div v-else class="card horizontal loader">
+                    <Loader/>
                 </div>
             </div>
         </div>
@@ -101,11 +100,42 @@
 
 <script>
 import M from 'materialize-css/dist/js/materialize.js'
+import axios from 'axios'
+import {baseApiUrl} from '@/global'
+import Loader from '../components/Loader'
 
 export default {
     name: 'ShowManga',
+    components: {Loader},
+    data(){
+        return {
+            comic: {},
+            author: '',
+            genres: {}
+        }
+    },
     mounted(){
+        this.getComic();
+        this.getComicGenres();
+        this.getAuthor();
         M.Collapsible.init(document.querySelectorAll('.collapsible'));
+    },
+    methods:{
+        getComic(){
+            axios.get(`${baseApiUrl}/comics/${this.$route.query.comic_id}`).then((res)=>{
+                this.comic = res.data
+            })
+        },
+        getAuthor(){
+            axios.get(`${baseApiUrl}/comics/${this.$route.query.comic_id}/comic_author`).then((res)=>{
+                this.author = res.data.name
+            })
+        },
+        getComicGenres(){
+            axios.get(`${baseApiUrl}/comics/${this.$route.query.comic_id}/comic_genre`).then((res)=>{
+                this.genres = res.data
+            })
+        }
     }
 }
 </script>
@@ -136,5 +166,10 @@ img{
 }
 .inline-icon {
    vertical-align: top;
+}
+.loader{
+    display: flex;
+    justify-content: center;
+    padding: 10%
 }
 </style>

@@ -5,7 +5,7 @@
                 <div class="card-panel">
                     <h3>Publish a new manga!</h3>
                     <div v-show='Object.keys(categories).length' class="row">
-                        <form class="col s12" @submit='sendManga'>
+                        <form class="col s12" @submit.prevent='sendManga'>
                             <div class="row">
                                 <div class="input-field col s6">
                                     <i class="material-icons prefix">star</i>
@@ -144,10 +144,11 @@ export default {
             }
 
             axios.post(`${baseApiUrl}/comics`, {comic: comic, genres: genres,
-                author: this.author, category: this.category}).then((resp) =>{
-                console.log(resp.data);
+                author: this.author, category: this.category}).then(() =>{
+                M.toast({html: 'Manga created with sucess!', classes: 'rounded green'})
+                this.$router.push('/mangas')
             }).catch((error)=>{
-                console.log(error);
+                M.toast({html: error, classes: 'rounded red'})
             });
         },
         getCover(e){

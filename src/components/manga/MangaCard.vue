@@ -2,22 +2,26 @@
     <div class="card medium">
         <div class="card-image waves-effect waves-block waves-light">
             <img class='activator' src="../../assets/oi.png">
-            <h6 class="card-title grey-text text-darken-4">{{ title }}</h6>
+            <h6 class="card-title grey-text text-darken-4">{{ manga.title }}</h6>
         </div>
         <div class="card-content activator">
-            <p>{{ description.substr(0, 105) }}</p>
+            <p>{{ manga.description.substr(0, 105) }}</p>
         </div>
         <div class="card-reveal activator">
-            <span class="card-title grey-text text-darken-4">{{ title }}<i class="material-icons right">close</i></span>
+            <span class="card-title grey-text text-darken-4">{{ manga.title }}<i class="material-icons right">close</i></span>
             <hr>
-            <p> {{ genres }} </p>
+            <span v-for='(n, i) in comicGenres' :key='i'>
+                {{n.name}},
+            </span>
             <hr>
-            <p>{{ description }}</p>
+            <p>{{ manga.description }}</p>
         </div>
         <div class="card-action">
-            <button class='waves-effect waves-light btn pink'>
-                <router-link to="/mangas/show">Ver mais</router-link>
-            </button>
+            <router-link :to="{path: '/mangas/show', query: {comic_id: manga._id.$oid}}">
+                <button class='waves-effect waves-light btn pink'>
+                Ver mais
+                </button>
+            </router-link>
             <span>
                 <i class="material-icons">star</i>
                 <i class="material-icons">star</i>
@@ -29,19 +33,25 @@
 </template>
 
 <script>
+import axios from 'axios'
+import {baseApiUrl} from '@/global'
+
 export default {
     name: 'MangaCard',
+    props: ['manga'],
+    mounted(){
+        this.getComicGenres()
+    },
     data(){
-        return {
-            title: 'Tokyo Ghoul',
-            description: `Imagine uma história em que você é o protagonista. Provavelmente seria uma tragédia, não? Pois essa é a 
-                história de Kaneki... Estranhos assassinatos estão acontecendo em Tokyo. Devido a evidência líquida na cena,
-                a polícia concluiu que os ataques são resultados de um "comedor" de um tipo vampiro. Kaneki é um jovem de 
-                18 anos cursando a faculdade, apaixonado por romances japoneses, ele e seu amigo Hide, criam a teoria de 
-                que os vampiros estão imitando os humanos, por isso nunca foram vistos. Mau eles sabem que essa 
-                teoria pode ser verdade...`,
-            genres: 'Seinen, Sobrenatural, Terror, Psicológico',
-            rate: 4
+        return{
+            comicGenres: {}
+        }
+    },
+    methods:{
+        getComicGenres(){
+            axios.get(`${baseApiUrl}/comics/${this.$props.manga._id.$oid}/comic_genre`).then((res)=>{
+                this.comicGenres = res.data
+            })
         }
     }
 }
