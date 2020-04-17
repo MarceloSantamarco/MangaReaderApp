@@ -8,9 +8,8 @@
                 <li class="tab col s4"><a href="#authors">Autores</a></li>
             </ul>
 
-            <DataFilters/>
-
             <div id="news">
+                <DataFilters :type='"comic"' @search='changeComic'/>
                 <div v-for='(n, i) in order.length' :key='i' class='row center-cols center-align'>
                     <div v-for='(manga, idx) in order[i]' :key='idx' class="col s3">
                         <MangaCard :manga='manga'/> 
@@ -19,6 +18,7 @@
             </div>
 
             <div id="categories">
+                <DataFilters type='category' @search='changeCategory'/>
                 <div class="container link-rows">
                     <div v-if='Object.keys(this.categories).length' class="collection">
                         <a v-for='n in this.categories' :key='n.id' href="#!" class="collection-item">{{n.name}}</a>
@@ -30,6 +30,7 @@
             </div>
 
             <div id="genres">
+                <DataFilters type='genre' @search='changeGenre'/>
                 <div class="container link-rows">
                     <div v-if='Object.keys(this.genres).length' class="collection">
                         <a v-for='n in this.genres' :key='n.id' href="#!" class="collection-item">{{n.name}}</a>
@@ -41,6 +42,7 @@
             </div>
 
             <div id="authors">
+                <DataFilters type='author' @search='changeAuthor'/>
                 <div class="container link-rows">
                     <div v-if='Object.keys(this.authors).length' class="collection">
                         <a v-for='n in this.authors' :key='n.id' href="#!" class="collection-item">{{n.name}}</a>
@@ -125,6 +127,29 @@ export default {
                 }
             }
             this.order = aux
+        },
+        changeComic(e){
+            if(e[0]){
+                this.sortComics(e)
+            }
+            else{
+                this.sortComics(this.comics)
+            }
+        },
+        changeAuthor(e){
+            if(e[0]){
+                this.authors = e
+            }
+        },
+        changeGenre(e){
+            if(e[0]){
+                this.genres = e
+            }
+        },
+        changeCategory(e){
+            if(e[0]){
+                this.categories = e
+            }
         }
     }
 }
