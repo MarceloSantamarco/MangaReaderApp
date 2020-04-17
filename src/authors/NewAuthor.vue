@@ -30,6 +30,7 @@
 <script>
 import axios from 'axios'
 import AuthorsTable from '../components/authors/AuthorsTable'
+import {baseApiUrl} from '@/global'
 
 export default {
     name: 'NewAuthor',
@@ -41,7 +42,7 @@ export default {
     },
     methods:{
         createAuthor(){
-            axios.post('http://localhost:3000/authors', {name: this.name}).then((res)=>{
+            axios.post(`${baseApiUrl}/authors`, {name: this.name}).then((res)=>{
                 console.log(res)
             }).catch((error)=>{
                 console.log(error)

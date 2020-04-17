@@ -7,19 +7,21 @@
                 <li class="tab col s4"><a href="#genres">Gêneros</a></li>
                 <li class="tab col s4"><a href="#authors">Autores</a></li>
             </ul>
+
             <DataFilters/>
+
             <div id="news">
-                <div v-for='n in Object.keys(comics).length % 2' :key='n' class='row center-cols center-align'>
-                    <div v-for='(manga, i) in comics' :key='i' class="col s3">
+                <div v-for='(n, i) in order.length' :key='i' class='row center-cols center-align'>
+                    <div v-for='(manga, idx) in order[i]' :key='idx' class="col s3">
                         <MangaCard :manga='manga'/> 
                     </div>
                 </div>
             </div>
 
             <div id="categories">
-                <div class="container">
+                <div class="container link-rows">
                     <div v-if='Object.keys(this.categories).length' class="collection">
-                        <a v-for='n in this.categories' :key='n.id' href="#!" class="collection-item">{{n.name}}<i class="material-icons secondary-content">remove_red_eye</i></a>
+                        <a v-for='n in this.categories' :key='n.id' href="#!" class="collection-item">{{n.name}}</a>
                     </div>
                     <div v-else class='empty'>
                         No records yet or user not authorized.
@@ -28,9 +30,9 @@
             </div>
 
             <div id="genres">
-                <div class="container">
+                <div class="container link-rows">
                     <div v-if='Object.keys(this.genres).length' class="collection">
-                        <a v-for='n in this.genres' :key='n.id' href="#!" class="collection-item">{{n.name}}<i class="material-icons secondary-content">remove_red_eye</i></a>
+                        <a v-for='n in this.genres' :key='n.id' href="#!" class="collection-item">{{n.name}}</a>
                     </div>
                     <div v-else class='empty'>
                         No records yet or user not authorized.
@@ -39,14 +41,13 @@
             </div>
 
             <div id="authors">
-                <div class="container">
+                <div class="container link-rows">
                     <div v-if='Object.keys(this.authors).length' class="collection">
-                        <a v-for='n in this.authors' :key='n.id' href="#!" class="collection-item">{{n.name}}<i class="material-icons secondary-content">remove_red_eye</i></a>
+                        <a v-for='n in this.authors' :key='n.id' href="#!" class="collection-item">{{n.name}}</a>
                     </div>
                     <div v-else class='empty'>
                         No records yet or user not authorized.
                     </div>
-                    <router-link to='/authors/new'><button class='btn pink' style='margin: 10px 0px 0px 10px;'>Manage</button></router-link>
                 </div>
             </div>
         </div>
@@ -77,7 +78,8 @@ export default {
             categories: {},
             genres: {},
             authors: {},
-            comics: {}
+            comics: {},
+            order: []
         }
     },
     methods:{
@@ -105,23 +107,37 @@ export default {
         getComics(){
             axios.get(`${baseApiUrl}/comics`).then((res)=>{
                 this.comics = res.data
+                this.sortComics(res.data);
             }).catch((error)=>{
                 console.log(error)
             })
+        },
+        sortComics(comics){
+            let aux = [];
+            while(comics.length){
+                if(comics.length > 4){
+                    aux.push(comics.slice(0, 4))
+                    comics.splice(0,4)
+                }
+                else{
+                    aux.push(comics)
+                    break;
+                }
+            }
+            this.order = aux
         }
     }
 }
 </script>
 
 <style scoped>
-.center-cols > .col{
-    float:none;
-    display: inline-block;
-    text-align: initial;
-}
 .container{
     color: #000;
     width: 90%;
+}
+.collection{
+    margin-bottom: 8%;
+    margin-top: 5%;
 }
 .tabs{
     background-color: #063e58;
@@ -130,8 +146,8 @@ export default {
     color: #FFF !important;
 }
 .container .collection{
-    text-align: justify;
-    width: 60%;
+    text-align: center;
+    width: 45%;
 }
 .empty {
     background-color: #D3D3D3;
@@ -145,16 +161,7 @@ export default {
 .loader{
     padding: 10%;
 }
-#genres .container{
-    display: flex;
-    justify-content: center;
-}
-#categories .container{
-    display: flex;
-    justify-content: center;
-}
-
-#authors .container{
+.link-rows{
     display: flex;
     justify-content: center;
 }

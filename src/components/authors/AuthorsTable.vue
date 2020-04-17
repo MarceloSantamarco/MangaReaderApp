@@ -19,6 +19,7 @@
 
 <script>
 import axios from 'axios'
+import {baseApiUrl} from '@/global'
 
 export default {
     name: 'AuthorsTable',
@@ -32,14 +33,14 @@ export default {
     },
     methods:{
         getAuthors(){
-            axios.get('http://localhost:3000/authors').then((res)=>{
+            axios.get(`${baseApiUrl}/authors`).then((res)=>{
                 this.authors = res.data
             }).catch((error)=>{
                 console.log(error)
             });
         },
         deleteAuthor(n){
-            axios.delete('http://localhost:3000/authors/'+n._id.$oid).then((res)=>{
+            axios.delete(`${baseApiUrl}/authors/${n._id.$oid}`).then((res)=>{
                 console.log(res)
             }).catch((error)=>{
                 console.log(error)

@@ -114,10 +114,12 @@ export default {
             genres: {}
         }
     },
-    mounted(){
+    created(){
         this.getComic();
         this.getComicGenres();
         this.getAuthor();
+    },
+    mounted(){
         M.Collapsible.init(document.querySelectorAll('.collapsible'));
     },
     methods:{

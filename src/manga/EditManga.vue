@@ -3,11 +3,11 @@
         <div class="row">
             <div class="col s12">
                 <div class="card-panel">
-                    <h3>Publish a new manga!</h3>
-                    <div v-show='Object.keys(categories).length' class="row">
-                        <MangaForm :categories='categories' :genres='genres' :authors='authors'/>
+                    <h3>Editing manga!</h3>
+                    <div v-if='Object.keys(categories).length && Object.keys(comic).length' class="row">
+                        <MangaForm :categories='categories' :genres='genres' :authors='authors' :manga='comic'/>
                     </div>
-                    <div v-show='!Object.keys(categories).length' style='padding: 4%;' class="row">
+                    <div v-else style='padding: 4%;' class="row">
                         <Loader/>
                     </div>
                 </div>
@@ -28,25 +28,38 @@ export default {
     data(){
         return{
             authors: {},
-            genres: {},
-            categories: {}
+            genres: [],
+            categories: {},
+            comic: {},
+            category: ''
         }
     },
     created(){
         this.getCategories();
         this.getGenres();
         this.getAuthors();
+        this.getComic();
     },
     methods:{
+        getComic(){
+            axios.get(`${baseApiUrl}/comics/${this.$route.query.comic_id}`).then((res)=>{
+                this.comic = res.data
+                this.category = res.data.category_id
+            }).catch((error)=>{
+                console.log(error)
+            })
+        },
         getCategories(){
             axios.get(`${baseApiUrl}/categories`).then((res)=>{
-                this.categories = res.data;
+                this.categories = res.data.filter((cat)=>{
+                    cat._id.$oid != this.category.$oid
+                })
             })
         },
         getGenres(){
             axios.get(`${baseApiUrl}/genres`).then((res)=>{
                 res.data.map((gen)=>{
-                    this.genres[gen.name] = null
+                    this.genres.push({tag: gen.name})
                 })
             })
         },

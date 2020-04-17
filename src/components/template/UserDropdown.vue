@@ -7,6 +7,8 @@
         <ul id='user-dropdown' class='dropdown-content'>
             <li><router-link to="/mangas/new">Contribute</router-link></li>
             <li><a href="#!">Profile</a></li>
+            <li><router-link to='/authors/new'>Authors</router-link></li>
+            <li><router-link to='/mangas/admin'>Mangas</router-link></li>
             <li @click.prevent='logout'><a href='#'>Logout</a></li>
         </ul>
     </div>
