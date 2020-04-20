@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <table v-if='Object.keys(comics).length' class='striped centered responsive-table'>
+        <table v-if='Object.keys(comics).length' class='highlight centered responsive-table'>
             <thead>
                 <tr>
                     <th>Name</th>

@@ -70,6 +70,7 @@
 <script>
 import M from 'materialize-css/dist/js/materialize.js'
 import axios from 'axios'
+import firebase from 'firebase'
 import {baseApiUrl} from '@/global'
 
 export default {
@@ -99,7 +100,7 @@ export default {
             category: '',
             published_at: '',
             adult: 0,
-            cover: ''
+            cover: {}
         }
     },
     methods:{
@@ -110,15 +111,20 @@ export default {
                 genres.push(gen['tag'])
             })
 
+            const time = Date.now()
+
             const comic = {
                 title: this.title, description: this.description, 
-                published_at: this.published_at, adult: this.adult
+                published_at: this.published_at, adult: this.adult, 
+                cover: `${firebase.storage().bucket_.bucket}/covers/${time}${this.cover.name}`
             }
 
             axios.post(`${baseApiUrl}/comics`, {comic: comic, genres: genres,
                 author: this.author, category: this.category}).then(() =>{
-                M.toast({html: 'Sucess!', classes: 'rounded green'})
-                this.$router.push('/mangas')
+                firebase.storage().ref('covers/' + `${time}${this.cover.name}`).put(this.cover).then(()=>{
+                    M.toast({html: 'Sucess!', classes: 'rounded green'})
+                    this.$router.push('/mangas')  
+                })
             }).catch((error)=>{
                 M.toast({html: error, classes: 'rounded red'})
             });

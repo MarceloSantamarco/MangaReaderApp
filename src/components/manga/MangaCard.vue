@@ -1,8 +1,11 @@
 <template>
     <div v-if='Object.keys(manga).length' class="card medium">
         <div class="card-image waves-effect waves-block waves-light">
-            <img class='activator' src="../../assets/oi.png">
-            <h6 class="card-title grey-text text-darken-4">{{ manga.title }}</h6>
+            <img v-if='coverUrl' class='activator' :src="coverUrl">
+            <div v-else style='padding-top: 15%'>
+                <loader/>
+            </div>
+            <span class="card-title text-darken-4">{{ manga.title }}</span>
         </div>
         <div class="card-content activator">
             <p>{{ manga.description.substr(0, 105) }}</p>
@@ -38,6 +41,7 @@
 <script>
 import axios from 'axios'
 import {baseApiUrl} from '@/global'
+import firebase from 'firebase'
 import Loader from '../Loader'
 
 export default {
@@ -45,17 +49,24 @@ export default {
     props: ['manga'],
     components:{Loader},
     mounted(){
-        this.getComicGenres()
+        this.getComicGenres();
+        this.imageUrl();
     },
     data(){
         return{
-            comicGenres: {}
+            comicGenres: {},
+            coverUrl: ''
         }
     },
     methods:{
         getComicGenres(){
             axios.get(`${baseApiUrl}/comics/${this.$props.manga._id.$oid}/comic_genre`).then((res)=>{
                 this.comicGenres = res.data
+            })
+        },
+        imageUrl(){
+            firebase.storage().ref().child(this.manga.cover.substr(30)).getDownloadURL().then((url)=>{
+                this.coverUrl = url
             })
         }
     }
@@ -72,5 +83,9 @@ export default {
 }
 .card .card-action:last-child{
     border-radius: 25px;
+}
+.card-title{
+    font-size: 25px !important;
+    font-weight: bold !important;
 }
 </style>

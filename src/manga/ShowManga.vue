@@ -4,7 +4,7 @@
             <div class="col s12">
                 <div v-if='Object.keys(comic) && Object.keys(genres) && author' class="card horizontal">
                     <div class="card-image">
-                        <img src="../assets/oi.png">
+                        <img :src="coverUrl">
                     </div>
                     <div class="card-stacked">
                         <h2 class="header">{{comic.title}}</h2>
@@ -101,6 +101,7 @@
 <script>
 import M from 'materialize-css/dist/js/materialize.js'
 import axios from 'axios'
+import firebase from 'firebase'
 import {baseApiUrl} from '@/global'
 import Loader from '../components/Loader'
 
@@ -111,6 +112,7 @@ export default {
         return {
             comic: {},
             author: '',
+            coverUrl: '',
             genres: {}
         }
     },
@@ -126,6 +128,9 @@ export default {
         getComic(){
             axios.get(`${baseApiUrl}/comics/${this.$route.query.comic_id}`).then((res)=>{
                 this.comic = res.data
+                firebase.storage().ref().child(res.data.cover.substr(30)).getDownloadURL().then((url)=>{
+                    this.coverUrl = url
+                })
             })
         },
         getAuthor(){
@@ -146,9 +151,6 @@ export default {
 .container{
     color: #000;
     text-align: initial;
-}
-img{
-    width: 70%;
 }
 .col.s2 > h4{
     margin: auto;
@@ -173,5 +175,10 @@ img{
     display: flex;
     justify-content: center;
     padding: 10%
+}
+.card-image{
+    padding-top: 0.5%;
+    padding-left: 0.5%;
+    margin-right: 1%;
 }
 </style>

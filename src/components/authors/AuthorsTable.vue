@@ -42,14 +42,10 @@ export default {
         deleteAuthor(n){
             axios.delete(`${baseApiUrl}/authors/${n._id.$oid}`).then((res)=>{
                 console.log(res)
+                this.getAuthors()
             }).catch((error)=>{
                 console.log(error)
             });
-        }
-    },
-    watch:{
-        authors(){
-            this.getAuthors();
         }
     }
 }
