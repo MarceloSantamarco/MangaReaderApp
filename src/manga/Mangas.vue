@@ -9,19 +9,19 @@
             </ul>
 
             <div id="news">
-                <MangaNews :comics='comics'/>
+                <MangaNews :comics='comics' :key='componentKey'/>
             </div>
 
             <div id="categories">
-                <LinkRows type='category' :object='categories'/>
+                <LinkRows type='category' :object='categories' @filtered='filterComics'/>
             </div>
 
             <div id="genres">
-                <LinkRows type='genre' :object='genres'/>
+                <LinkRows type='genre' :object='genres' @filtered='filterComics'/>
             </div>
 
             <div id="authors">
-                <LinkRows type='author' :object='authors'/>
+                <LinkRows type='author' :object='authors' @filtered='filterComics'/>
             </div>
         </div>
         <div v-else class="loader">
@@ -31,6 +31,7 @@
 </template>
 
 <script>
+import M from 'materialize-css/dist/js/materialize.js'
 import MangaNews from '../components/manga/MangaNews'
 import Loader from '../components/Loader'
 import LinkRows from '../components/LinkRows'
@@ -51,7 +52,8 @@ export default {
             categories: {},
             genres: {},
             authors: {},
-            comics: {}
+            comics: {},
+            componentKey: 0
         }
     },
     methods:{
@@ -79,6 +81,20 @@ export default {
         getComics(){
             axios.get(`${baseApiUrl}/comics`).then((res)=>{
                 this.comics = res.data
+            }).catch((error)=>{
+                console.log(error)
+            })
+        },
+        filterComics(e){
+            axios.get(`${baseApiUrl}/related_comics?${e[1]}=${e[0]}`).then((res)=>{
+                if(res.data.length){
+                    this.comics = res.data;
+                    this.componentKey++;
+                    M.Tabs.getInstance(document.querySelector('.tabs')).select('news')
+                }
+                else{
+                    M.toast({html: 'No comics in this section', classess: 'roundded'})
+                }
             }).catch((error)=>{
                 console.log(error)
             })

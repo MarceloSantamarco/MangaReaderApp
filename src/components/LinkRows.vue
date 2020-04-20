@@ -3,10 +3,12 @@
         <DataFilters :type='type' @search='searchMethod'/>
         <div class="container link-rows">
             <div v-if='Object.keys(object).length' class="collection">
-                <a v-for='n in term || object' :key='n.id' href="#!" class="collection-item">{{n.name}}</a>
+                <a v-for='(n, i) in term || object' :key='i' class="collection-item" @click='search(n.name, type)'>
+                    {{n.name}}
+                </a>
             </div>
             <div v-else class='empty'>
-                No records yet.
+                No records yet
             </div>
         </div>
     </div>
@@ -52,6 +54,9 @@ export default {
             if(e[0]){
                 this.term = e
             }
+        },
+        search(item, type){
+            this.$emit('filtered', [item, type])
         }
     }
 }
