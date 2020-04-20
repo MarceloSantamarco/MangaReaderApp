@@ -1,11 +1,11 @@
 <template>
     <div v-if='Object.keys(manga).length' class="card medium">
-        <div class="card-image waves-effect waves-block waves-light">
-            <img v-if='coverUrl' class='activator' :src="coverUrl">
-            <div v-else style='padding-top: 15%'>
-                <loader/>
-            </div>
+        <div v-if='coverUrl'  class="card-image waves-effect waves-block waves-light">
+            <img class='activator' :src="coverUrl">
             <span class="card-title text-darken-4">{{ manga.title }}</span>
+        </div>
+        <div v-else style='padding-top: 15%'>
+            <loader/>
         </div>
         <div class="card-content activator">
             <p>{{ manga.description.substr(0, 105) }}</p>

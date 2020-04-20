@@ -4,7 +4,10 @@
             <div class="col s12">
                 <div v-if='Object.keys(comic) && Object.keys(genres) && author' class="card horizontal">
                     <div class="card-image">
-                        <img :src="coverUrl">
+                        <img v-if='coverUrl' :src="coverUrl">
+                        <div v-else>
+                            <Loader/>
+                        </div>
                     </div>
                     <div class="card-stacked">
                         <h2 class="header">{{comic.title}}</h2>
