@@ -10,7 +10,14 @@
                         </div>
                     </div>
                     <div class="card-stacked">
-                        <h2 class="header">{{comic.title}}</h2>
+                        <div class="row">
+                            <div class="col s10">
+                                <h2 class="header">{{comic.title}}</h2>
+                             </div>
+                             <div class="col s2">
+                                 <MangaFavorite :comic='comic'/>
+                             </div>
+                        </div>
                         <div class="card-content">
                             <p>
                                 {{comic.description}}
@@ -24,29 +31,7 @@
                                 <span>Finalizado</span>
                             </p>
                             <br>
-                            <ul class="collapsible">
-                                <li>
-                                    <div class="collapsible-header">
-                                        5.0
-                                        <i class="material-icons">star</i>
-                                        <i class="material-icons">star</i>
-                                        <i class="material-icons">star</i>
-                                        <i class="material-icons">star</i>
-                                        <i class="material-icons">star</i>
-                                    </div>
-                                    <div class="collapsible-body">
-                                        <ul class="collection">
-                                            <li v-for='n in 5' :key='n' class="collection-item">
-                                                <div>{{n+2}} votos
-                                                    <span class="secondary-content">
-                                                        <i v-for='i in n' :key='i' class="material-icons">star</i>
-                                                    </span>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </li>
-                            </ul>
+                            <MangaRating :comic='comic'/>
                         </div>
                         <div class="card-action">
                             <span v-for='(n,i) in genres' :key='i'>
@@ -60,57 +45,24 @@
                 </div>
             </div>
         </div>
-        <ul class="collection with-header">
-            <li class="collection-header">
-                <h4><i class="material-icons inline-icon">library_books</i>Chapters</h4>
-            </li>
-            <a v-for="n in 14" :key='n' class="collection-item" href='#'>
-                {{n}}
-                <span class='secondary-content'>27/09/2019</span>
-            </a>
-        </ul>
-        <ul class="collection with-header">
-            <li class="collection-header">
-                <h4><i class="material-icons inline-icon">comment</i>Comments</h4>
-            </li>
-            <li class="collection-item avatar">
-                <img src="../assets/user-icon.png" alt="user" class="circle">
-                <strong><span class="title">José Ramalho</span></strong>
-                <p> Muito TOP !!!! </p>
-                <span class="secondary-content">
-                    23/09/2019
-                </span>
-            </li>
-            <li class="collection-item avatar">
-                <img src="../assets/user-icon.png" alt="user" class="circle">
-                <strong><span class="title">Edson Ferreira</span></strong>
-                <p> Achei meio bosta esse final </p>
-                <span class="secondary-content">
-                    20/09/2019
-                </span>
-            </li>
-            <li class="collection-item avatar">
-                <img src="../assets/user-icon.png" alt="user" class="circle">
-                <strong><span class="title">Astolfo Antunes</span></strong>
-                <p>Não esperava muito desse mangá mas a história me surpreendeu</p>
-                <span class="secondary-content">
-                    19/09/2019
-                </span>
-            </li>
-        </ul>
+        <MangaChapters/>
+        <MangaComments/>
     </div>
 </template>
 
 <script>
-import M from 'materialize-css/dist/js/materialize.js'
 import axios from 'axios'
 import firebase from 'firebase'
 import {baseApiUrl} from '@/global'
+import MangaChapters from '../components/manga/MangaChapters'
+import MangaComments from '../components/manga/MangaComments'
+import MangaFavorite from '../components/manga/MangaFavorite'
+import MangaRating from '../components/manga/MangaRating'
 import Loader from '../components/Loader'
 
 export default {
     name: 'ShowManga',
-    components: {Loader},
+    components: {Loader, MangaChapters, MangaComments, MangaRating, MangaFavorite},
     data(){
         return {
             comic: {},
@@ -119,13 +71,10 @@ export default {
             genres: {}
         }
     },
-    created(){
+    mounted(){
         this.getComic();
         this.getComicGenres();
         this.getAuthor();
-    },
-    mounted(){
-        M.Collapsible.init(document.querySelectorAll('.collapsible'));
     },
     methods:{
         getComic(){
@@ -161,15 +110,6 @@ export default {
 }
 .card-content > p{
     font-size: 18px;
-}
-.collapsible-header{
-    display: flex;
-    align-items: center;
-    font-size: 35px;
-    padding-right: 2%;
-}
-.collapsible-header > i{
-    padding-left: 12%;
 }
 .inline-icon {
    vertical-align: top;
