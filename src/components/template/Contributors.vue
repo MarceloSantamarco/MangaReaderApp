@@ -9,8 +9,13 @@
 </template>
 
 <script>
+import M from 'materialize-css/dist/js/materialize.js'
+
 export default {
-    name: 'Contributors'
+    name: 'Contributors',
+    mounted(){
+        M.AutoInit();
+    }
 }
 </script>
 

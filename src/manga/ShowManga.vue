@@ -4,7 +4,7 @@
             <div class="col s12">
                 <div v-if='Object.keys(comic) && Object.keys(genres) && author' class="card horizontal">
                     <div class="card-image">
-                        <img v-if='coverUrl' :src="coverUrl">
+                        <img v-if='coverUrl' :src="coverUrl" width='600' height="515">
                         <div v-else>
                             <Loader/>
                         </div>

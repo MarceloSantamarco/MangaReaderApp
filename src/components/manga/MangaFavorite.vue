@@ -1,6 +1,6 @@
 <template>
     <div>
-        <a class="modal-trigger" :href="favorite ? '#' : '#modal1'" @click="favorite ? deleteFavorite : createFavorite"><i class='material-icons heart'>{{favorite ? 'favorite' : 'favorite_border'}}</i></a>
+        <a class="modal-trigger" :href="favorite ? '#' : '#modal1'" @click="createFavorite"><i class='material-icons heart'>{{favorite ? 'favorite' : 'favorite_border'}}</i></a>
         <div id="modal1" class="modal">
             <div class="modal-content">
                 <h4>{{comic.title}} adicionado aos favoritos!</h4>
@@ -45,19 +45,24 @@ export default {
         },
         checkFavorite(){
             axios.get(`${baseApiUrl}/favorites?comic_id=${this.comic._id.$oid}`).then((res)=>{
-                if(res.data.includes(this.comic)){
-                    this.favorite = true
-                }
+                res.data.map((fav)=>{
+                    if(fav.comic_id.$oid == this.comic._id.$oid){
+                        this.favorite = true
+                    }
+                })
             })
         },
         createFavorite(){
-            axios.post(`${baseApiUrl}/favorites?comic_id=${this.comic._id.$oid}`).then((res)=>{
+            if(this.favorite){
+                this.deleteFavorite()
+                return
+            }
+            axios.post(`${baseApiUrl}/favorites?comic_id=${this.comic._id.$oid}`).then(()=>{
                 this.favorite = true
-                console.log(res.data)
             })
         },
         deleteFavorite(){
-            axios.delete(`${baseApiUrl}/favorites`, this.comic).then(()=>{
+            axios.delete(`${baseApiUrl}/favorites/${this.comic._id.$oid}`).then(()=>{
                 this.favorite = false
                 M.toast({html: `${this.comic.title} deletado dos favoritos!`, classes: 'roundded'})
             })

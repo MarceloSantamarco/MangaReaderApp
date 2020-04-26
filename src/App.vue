@@ -12,7 +12,6 @@
 <script>
 import Header from './components/template/Header'
 import Footer from './components/template/Footer'
-import M from 'materialize-css/dist/js/materialize.js'
 import {userKey} from '@/global'
 
 export default {
@@ -22,11 +21,10 @@ export default {
     Footer
   },
   mounted(){
-    M.AutoInit();
     this.validateToken();
   },
   methods: {
-    async validateToken(){
+    validateToken(){
       const userData = JSON.parse(localStorage.getItem(userKey))
       
       if(userData){
