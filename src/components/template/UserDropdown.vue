@@ -16,6 +16,7 @@
 
 <script>
 import M from 'materialize-css/dist/js/materialize.js'
+import {userKey} from '@/global'
 
 export default {
     name: 'UserDropdown',
@@ -23,6 +24,7 @@ export default {
     methods:{
         logout(){
             this.$store.commit('setUser', null)
+            localStorage.removeItem(userKey)
             M.toast({html: 'Signed out sucessfully!', classes:'rounded green'})
             this.$router.push('/')
         }
