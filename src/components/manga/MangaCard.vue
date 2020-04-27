@@ -25,11 +25,11 @@
                 Ver mais
                 </button>
             </router-link>
-            <span>
-                <i class="material-icons">star</i>
-                <i class="material-icons">star</i>
-                <i class="material-icons">star</i>
-                <i class="material-icons">star_half</i>
+            <span v-if='stars.length'>
+                <i v-for='(n,i) in stars' :key='i' class="material-icons rate">{{n}}</i>
+            </span>
+            <span v-else>
+                <i v-for='i in 5' :key='i' class='material-icons rate'>star_border</i>
             </span>
         </div>
     </div>
@@ -69,6 +69,28 @@ export default {
                 this.coverUrl = url
             })
         }
+    },
+    computed:{
+        stars(){
+            let stars = []
+            let num = this.manga.rate
+
+            for(let i=0; i<Math.floor(num); i++){
+                stars[i] = 'star'
+            }
+
+            if(!Number.isInteger(num)){
+                stars.push('star_half')
+            }
+
+            if(stars.length < 5){
+                for(let i=stars.length; i<5; i++){
+                    stars.push('star_border')
+                }
+            }
+
+            return stars
+        }
     }
 }
 </script>
@@ -87,5 +109,8 @@ export default {
 .card-title{
     font-size: 25px !important;
     font-weight: bold !important;
+}
+.rate{
+    color: gold;
 }
 </style>

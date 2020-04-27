@@ -14,8 +14,11 @@
                             <div class="col s10">
                                 <h2 class="header">{{comic.title}}</h2>
                              </div>
-                             <div class="col s2">
+                             <div v-if='comic' class="col s2">
                                  <MangaFavorite :comic='comic'/>
+                             </div>
+                             <div v-else class="col s2">
+                                <Loader/>
                              </div>
                         </div>
                         <div class="card-content">
@@ -31,12 +34,21 @@
                                 <span>Finalizado</span>
                             </p>
                             <br>
-                            <MangaRating :comic='comic'/>
+                            <MangaRate v-if='comic' :comic='comic'/>
+                            <Loader v-else/>
                         </div>
                         <div class="card-action">
-                            <span v-for='(n,i) in genres' :key='i'>
-                                {{n.name}},
-                            </span>
+                            <div class="row">
+                                <div class="col s6">
+                                    <span v-for='(n,i) in genres' :key='i'>
+                                        {{n.name}},
+                                    </span>
+                                </div>
+                                <div class="col s6">
+                                    <MangaRating v-if='comic' :comic='comic'/>
+                                    <Loader v-else/>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -57,12 +69,13 @@ import {baseApiUrl} from '@/global'
 import MangaChapters from '../components/manga/MangaChapters'
 import MangaComments from '../components/manga/MangaComments'
 import MangaFavorite from '../components/manga/MangaFavorite'
+import MangaRate from '../components/manga/MangaRate'
 import MangaRating from '../components/manga/MangaRating'
 import Loader from '../components/Loader'
 
 export default {
     name: 'ShowManga',
-    components: {Loader, MangaChapters, MangaComments, MangaRating, MangaFavorite},
+    components: {Loader, MangaChapters, MangaComments, MangaRate, MangaFavorite, MangaRating},
     data(){
         return {
             comic: {},
