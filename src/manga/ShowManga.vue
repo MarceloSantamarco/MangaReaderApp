@@ -58,7 +58,8 @@
             </div>
         </div>
         <MangaChapters/>
-        <MangaComments/>
+        <MangaComments :user='this.$store.state.user' :key='commentsKey' @deleted='()=>(this.commentsKey+=1)'/>
+        <NewComment v-if='this.$store.state.user' @commented='()=>(this.commentsKey+=1)'/>
     </div>
 </template>
 
@@ -71,17 +72,19 @@ import MangaComments from '../components/manga/MangaComments'
 import MangaFavorite from '../components/manga/MangaFavorite'
 import MangaRate from '../components/manga/MangaRate'
 import MangaRating from '../components/manga/MangaRating'
+import NewComment from '../components/comments/NewComment'
 import Loader from '../components/Loader'
 
 export default {
     name: 'ShowManga',
-    components: {Loader, MangaChapters, MangaComments, MangaRate, MangaFavorite, MangaRating},
+    components: {Loader, MangaChapters, MangaComments, MangaRate, MangaFavorite, MangaRating, NewComment},
     data(){
         return {
             comic: {},
             author: '',
             coverUrl: '',
-            genres: {}
+            genres: {},
+            commentsKey: 0
         }
     },
     mounted(){

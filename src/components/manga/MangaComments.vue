@@ -1,41 +1,53 @@
 <template>
     <ul class="collection with-header">
         <li class="collection-header">
-            <h4><i class="material-icons inline-icon">comment</i>Comments</h4>
+            <h4><i class="material-icons inline-icon">comment</i>Comentários</h4>
         </li>
-        <li class="collection-item avatar">
-            <img src="../../assets/user-icon.png" alt="user" class="circle">
-            <strong><span class="title">José Ramalho</span></strong>
-            <p> Muito TOP !!!! </p>
+        <li v-for='(com, i) in comments' :key='i' class="collection-item avatar">
+            <img v-if='!com.user_id.photo' src="../../assets/user-icon.png" alt="user" class="circle">
+            <strong><span class="title">{{com.user_id.name}}</span></strong>
+            <p>{{com.text}}</p>
             <span class="secondary-content">
-                23/09/2019
-            </span>
-        </li>
-        <li class="collection-item avatar">
-            <img src="../../assets/user-icon.png" alt="user" class="circle">
-            <strong><span class="title">Edson Ferreira</span></strong>
-            <p> Achei meio bosta esse final </p>
-            <span class="secondary-content">
-                20/09/2019
-            </span>
-        </li>
-        <li class="collection-item avatar">
-            <img src="../../assets/user-icon.png" alt="user" class="circle">
-            <strong><span class="title">Astolfo Antunes</span></strong>
-            <p>Não esperava muito desse mangá mas a história me surpreendeu</p>
-            <span class="secondary-content">
-                19/09/2019
+                <i v-if='com.user_id.email == user.email' @click='deleteComment(com)' class='material-icons' style='color: red'>delete</i>
+                <span v-else>{{new Date(com.created_at).toLocaleDateString()}}</span>
             </span>
         </li>
     </ul>  
 </template>
 
 <script>
+import M from 'materialize-css/dist/js/materialize.js'
+import axios from 'axios'
+import {baseApiUrl} from '@/global'
+
 export default {
-    name: 'MangaComments'
+    name: 'MangaComments',
+    props: ['user'],
+    mounted(){
+        this.getComments()
+    },
+    data(){
+        return {
+            comments: []
+        }
+    },
+    methods: {
+        getComments(){
+            axios.get(`${baseApiUrl}/comments?comic_id=${this.$route.query.comic_id}`).then((res)=>{
+                console.log(res.data)
+                this.comments = res.data
+            })
+        },
+        deleteComment(comment){
+            axios.delete(`${baseApiUrl}/comments/${comment._id.$oid}`).then(()=>{
+                M.toast({html: 'Comentário excluído!', classess: 'roundded'})
+                this.$emit('deleted')
+            })
+        }
+    }
 }
 </script>
 
-<style>
+<style scoped>
 
 </style>
