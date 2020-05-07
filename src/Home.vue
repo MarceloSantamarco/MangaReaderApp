@@ -1,26 +1,22 @@
 <template>
     <div class="container">
         <h4>Read your favorite mangas here with us!</h4>
-        <div class="row center">
-            <div class="col s4"></div>
-            <div v-if='this.$store.state.user' class="col s4">
-                <UserDashboard/>
-            </div>
-            <div v-else>
-                <SignIn/>
-            </div>
-        </div>
+        <UserNavbar v-if='this.$store.state.user'/>
+        <UserDashboard v-if='this.$store.state.user'/>
+        <SignIn v-else/>
     </div>
 </template>
 
 <script>
 import SignIn from './components/SignIn'
 import UserDashboard from './user/UserDashboard'
+import UserNavbar from './components/user/UserNavbar'
 
 export default {
     name: 'Home',
     components: {
         SignIn,
+        UserNavbar,
         UserDashboard
     }
 }

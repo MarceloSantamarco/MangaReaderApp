@@ -5,21 +5,23 @@
         </a>
 
         <ul id='user-dropdown' class='dropdown-content'>
-            <li><router-link to="/mangas/new">Contribute</router-link></li>
-            <li><a href="#!">Profile</a></li>
-            <li><router-link to='/authors/new'>Authors</router-link></li>
+            <li><router-link to="/mangas/new">Contribuir</router-link></li>
+            <!-- <li><UserPhoto/></li> -->
+            <li><router-link to='/authors/new'>Autores</router-link></li>
             <li><router-link to='/mangas/admin'>Mangas</router-link></li>
-            <li @click.prevent='logout'><a href='#'>Logout</a></li>
+            <li @click.prevent='logout'><a href='#'>Sair</a></li>
         </ul>
     </div>
 </template>
 
 <script>
 import M from 'materialize-css/dist/js/materialize.js'
+// import UserPhoto from '../user/UserPhoto'
 import {userKey} from '@/global'
 
 export default {
     name: 'UserDropdown',
+    // components: {UserPhoto},
     props: ['user'],
     methods:{
         logout(){

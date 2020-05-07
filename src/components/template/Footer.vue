@@ -40,6 +40,7 @@ export default {
 .page-footer{
     text-align: center;
     background-color: #084d6e;
+    margin-top: 12.8%;
 }
 .carousel{
     height: 180px;

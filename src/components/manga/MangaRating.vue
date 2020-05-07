@@ -48,6 +48,9 @@ export default {
             })
         },
         checkRate(){
+            if(!this.$store.state.user){
+                return
+            }
             const comic_id = this.$route.query.comic_id
             axios.get(`${baseApiUrl}/ratings`).then((res)=>{
                 res.data.map((rate)=>{

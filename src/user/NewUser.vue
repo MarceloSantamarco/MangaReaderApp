@@ -3,14 +3,14 @@
     <div class="row">
       <div class="col s12">
         <div class="card-panel">
-          <h3>Join Us!</h3>
+          <h3>Cadastre-se!</h3>
           <div class='row'>
             <form class='col s12' @submit="sendUser">
               <div class="row">
                 <div class="col s6 input-field">
                   <i class="material-icons prefix">account_circle</i>
                   <input type="text" name="name" v-model="user.name">
-                  <label for="name" class='active'>Name</label>
+                  <label for="name" class='active'>Nome</label>
                 </div>
                 <div class="col s6 input-field">
                   <i class="material-icons prefix">email</i>
@@ -23,26 +23,26 @@
                 <div class="col s6 input-field">
                   <i class="material-icons prefix">phone</i>
                   <input type="text" name="phone" v-model="user.phone">
-                  <label for="phone" class='active'>Phone</label>
+                  <label for="phone" class='active'>Telefone</label>
                 </div>
                 <div class="col s6 input-field">
                   <i class="material-icons prefix">perm_contact_calendar</i>
-                  <input type="text" class="datepicker" placeholder='Birthdate' @change="dateChanged">
+                  <input type="text" class="datepicker" placeholder='Data de nascimento' @change="dateChanged">
                 </div>
               </div>
               <div class="row">
                 <div class="col s6 input-field">
                   <i class="material-icons prefix" @click='showPassword'>{{icon}}</i>
                   <input :type="fieldType" name="password" v-model="user.password">
-                  <label for="password" class='active'>Password</label>
+                  <label for="password" class='active'>Senha</label>
                 </div>
                  <div class="col s6 input-field">
                   <i class="material-icons prefix">lock</i>
                   <input type="password" name="password_confirmation" v-model="user.password_confirmation">
-                  <label for="password_confirmation" class='active'>Password Confirmation</label>
+                  <label for="password_confirmation" class='active'>Confirmação de senha</label>
                 </div>
               </div>
-              <button type='submit' class='btn pink right'>Create<i class="material-icons right">arrow_forward</i></button>
+              <button type='submit' class='btn pink right'>Criar<i class="material-icons right">arrow_forward</i></button>
             </form>
           </div>
         </div>

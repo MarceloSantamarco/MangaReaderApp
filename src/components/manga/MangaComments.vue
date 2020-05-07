@@ -8,7 +8,7 @@
             <strong><span class="title">{{com.user_id.name}}</span></strong>
             <p>{{com.text}}</p>
             <span class="secondary-content">
-                <i v-if='com.user_id.email == user.email' @click='deleteComment(com)' class='material-icons' style='color: red'>delete</i>
+                <i v-if='user && (com.user_id.email == user.email)' @click='deleteComment(com)' class='material-icons' style='color: red'>delete</i>
                 <span v-else>{{new Date(com.created_at).toLocaleDateString()}}</span>
             </span>
         </li>
@@ -34,7 +34,6 @@ export default {
     methods: {
         getComments(){
             axios.get(`${baseApiUrl}/comments?comic_id=${this.$route.query.comic_id}`).then((res)=>{
-                console.log(res.data)
                 this.comments = res.data
             })
         },

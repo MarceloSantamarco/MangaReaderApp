@@ -23,6 +23,9 @@ export default {
     },
     methods:{
         checkFavorite(){
+            if(!this.$store.state.user){
+                return
+            }
             const comic_id = this.$route.query.comic_id
             axios.get(`${baseApiUrl}/favorites?comic_id=${comic_id}`).then((res)=>{
                 res.data.map((fav)=>{

@@ -7,10 +7,10 @@
             </div>
             <div class="collapsible-body">
                 <ul class="collection">
-                    <li v-for='n in 5' :key='n' class="collection-item">
-                        <div>{{ratings[n]}} votos
+                    <li v-for='(n, k, i) in ratings' :key='i' class="collection-item">
+                        <div>{{n}} votos
                             <span class="secondary-content">
-                                <i v-for='i in n' :key='i' class="material-icons">star</i>
+                                <i v-for='j in i+1' :key='j' class="material-icons">star</i>
                             </span>
                         </div>
                     </li>
@@ -30,7 +30,7 @@ export default {
     props: ['comic'],
     data(){
         return {
-            ratings: []
+            ratings: {}
         }
     },
     mounted(){
@@ -42,6 +42,7 @@ export default {
             const comic_id = this.$route.query.comic_id
             axios.get(`${baseApiUrl}/ratings_count?comic_id=${comic_id}`).then((res)=>{
                 this.ratings = res.data
+                console.log(res.data)
             })
         }
     },
