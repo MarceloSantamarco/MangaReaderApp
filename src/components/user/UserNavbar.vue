@@ -1,7 +1,7 @@
 <template>
     <div class='sidebar'>
         <div class="row">
-            <img src="../../assets/user-icon.png" alt="user" width='230'>
+            <UserPhoto/>
         </div>
         <br>
         <hr>
@@ -18,9 +18,11 @@
 
 <script>
 // import M from 'materialize-css/dist/js/materialize.js'
+import UserPhoto from './UserPhoto'
 
 export default {
-    name: 'UserNavbar'
+    name: 'UserNavbar',
+    components:{UserPhoto}
 }
 </script>
 
@@ -35,13 +37,6 @@ export default {
     height: 100%;  
     overflow-x:hidden; 
     overflow-y:hidden; 
-}
-img{
-    margin-top: 15%;
-    border-radius: 10%;
-}
-img:hover{
-    filter: brightness(50%);
 }
 .favorites{
     text-align: initial !important;
