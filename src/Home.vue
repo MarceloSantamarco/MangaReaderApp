@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <h4>Read your favorite mangas here with us!</h4>
+        <h4>Leia seus mangas favoritos aqui com a gente!</h4>
         <UserNavbar v-if='this.$store.state.user'/>
         <UserDashboard v-if='this.$store.state.user'/>
         <SignIn v-else/>

@@ -1,6 +1,6 @@
 <template>
     <div class="card-panel">
-        <h4>Welcome Back!</h4>
+        <h4>Bem vindo!</h4>
         <form @submit="signin">
             <div class="row">
                 <div class="input-field col s12">
@@ -11,19 +11,19 @@
             <div class="row">
                 <div class="input-field col s12">
                     <input id="password" type="password" class="validate" v-model="user.password">
-                    <label for="password">Password</label>
+                    <label for="password">Senha</label>
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s12">
-                    <button class='waves-effect waves-light btn btn-large pink' type='submit'>Sign In</button>
+                    <button class='waves-effect waves-light btn btn-large pink' type='submit'>Entrar</button>
                 </div>
             </div>
         </form>
         <div class="row">
             <div class="input-field col s12">
-                <a href='#'><router-link to="/users/password">Forgot your password?</router-link></a><br/>
-                <a href='#'><router-link to="/users/new">Create an account</router-link></a>
+                <router-link to="/users/password">Esqueceu sua senha?</router-link><br>
+                <router-link to="/users/new">Criar uma conta</router-link>
             </div>
         </div>
     </div>
@@ -63,5 +63,7 @@ export default {
 <style scoped>
 .card-panel {
     color: black;
+    width: 40%;
+    margin: 8% 30%;
 }
 </style>

@@ -3,12 +3,12 @@
         <div class="container">
             <div class="row">
                 <div class="col l6 s12">
-                    <h5>Popular contributors</h5>
+                    <h5>Contribuidores populares</h5>
                     <Contributors/>
                 </div>
                 <div class="col l4 offset-l2 s12">
                 <h5 class="white-text">Questions?</h5>
-                <p>Please, report your problems and sugestions</p>
+                <p>Por favor, reporte seus problemas e sugestões</p>
                 <ul>
                     <li><a class="grey-text text-lighten-3" href="#!">(11) 94566-6745</a></li>
                     <li><a class="grey-text text-lighten-3" href="#!">mangashere@example.com</a></li>
@@ -18,8 +18,8 @@
         </div>
         <div class="footer-copyright">
             <div class="container">
-                © 2020 Copyright Text
-                <a class="grey-text text-lighten-4 right" href="#!">About us</a>
+                Marcelo Santamarco's © 2020 - Todos os direitos reservados
+                <a class="grey-text text-lighten-4 right" href="#!">Sobre</a>
             </div>
         </div>
     </footer>

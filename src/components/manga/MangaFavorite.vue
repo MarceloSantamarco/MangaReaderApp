@@ -36,6 +36,9 @@ export default {
             })
         },
         createFavorite(){
+            if(!this.$store.state.user){
+                this.$router.push('/')
+            }
             if(this.favorite){
                 this.deleteFavorite()
                 return

@@ -1,5 +1,5 @@
 <template>
-    <div class='rate' v-show='!rate'>
+    <div class='rate' v-show='!rate && this.$store.state.user'>
         <a class='modal-trigger btn green' :href='rate ? "" : "#modal1"' @click="rate ? '' : rateManga"><i class='material-icons right'>star</i> Avaliar</a>
         <div id="modal1" class="modal">
             <div class="modal-content">
