@@ -1,6 +1,6 @@
 <template>
     <div>
-        <a class='modal-trigger' href="#modal1"><img src="../../assets/user-icon.png" alt="user" width='230'></a>
+        <a class='modal-trigger tooltipped' data-position="bottom" data-tooltip="Mudar avatar" href="#modal1"><img src="../../assets/user-icon.png" alt="user" width='230'></a>
         <div id="modal1" class="modal">
             <div class="modal-content">
                 <h4>Importe sua foto de perfil!</h4>
@@ -30,6 +30,7 @@ export default {
     name: 'UserPhoto',
     mounted(){
         M.Modal.init(document.querySelectorAll('.modal'));
+        M.Tooltip.init(document.querySelectorAll('.tooltipped'));
     }
 }
 </script>

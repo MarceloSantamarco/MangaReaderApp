@@ -3,7 +3,9 @@
         <div class="row">
             <div class="col s12">
                 <div class="card-panel">
-                    <h3>Publish a new manga!</h3>
+                    <h3>Publique um novo manga!</h3>
+                    <h5>Crie seu título para poder publicar novos capítulos</h5>
+                    <br>
                     <div v-show='Object.keys(categories).length' class="row">
                         <MangaForm :categories='categories' :genres='genres' :authors='authors'/>
                     </div>
@@ -63,9 +65,8 @@ export default {
 
 <style>
 .card-panel{
-    color: #000
-}
-.row{
-    margin-bottom: 1% !important;
+    color: #000;
+    text-align:initial;
+    padding: 4% 6% !important;
 }
 </style>

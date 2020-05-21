@@ -4,19 +4,19 @@
             <div class="input-field col s6">
                 <i class="material-icons prefix">star</i>
                 <input id="icon_prefix" type="text" class="validate" v-model='title'>
-                <label class='active' for="icon_prefix">Title</label>
+                <label for="icon_prefix">Título</label>
             </div>
             <div class="input-field col s6">
                 <i class="material-icons prefix">account_circle</i>
                 <input type="text" id="autocomplete-input" class="autocomplete no-autoinit" v-model='author'>
-                <label class='active' for="autocomplete-input">Author</label>
+                <label for="autocomplete-input">Autor</label>
             </div>
         </div>
         <div class="row">
             <div class="input-field col s12">
                 <i class="material-icons prefix">textsms</i>
                 <textarea id="textarea2" class="materialize-textarea" data-length="500" v-model='description'></textarea>
-                <label class='active' for="textarea2">Description</label>
+                <label for="textarea2">Descrição</label>
             </div>
         </div>
         <div class="row">
@@ -24,7 +24,7 @@
                 <select :class="manga ? '' : 'browser-default'" v-model='category'>
                     <option v-if='manga' :value="manga.category_id.$oid" selected>
                     </option>
-                    <option v-else value="">Category</option>
+                    <option v-else value="">Categoria</option>
                     <option v-for='(n, i) in categories' :key='i' :value='n._id.$oid'>
                         {{n.name}}
                     </option>
@@ -36,14 +36,14 @@
                 </div>
             </div>
             <div class="input-field col s2">
-                <input type="text" class="datepicker" placeholder='Published at...' @change="dateChanged">
+                <input type="text" class="datepicker" placeholder='Publicado em...' @change="dateChanged">
             </div>
             <div class="input-field col s2">
                 <div class="switch">
                     <label>
                         <input type="checkbox" v-model='adult'>
                         <span class="lever"></span>
-                        Adult
+                        Adulto
                     </label>
                 </div>
             </div>
@@ -51,7 +51,7 @@
         <div class="row">
             <div class="file-field input-field col s12">
                 <div class="btn-small pink">
-                    <span>Manga cover</span>
+                    <span>Cover</span>
                     <input type="file" @change="getCover">
                 </div>
                 <div class="file-path-wrapper">
@@ -60,8 +60,8 @@
             </div>
         </div>
         <div class="row">
-            <div class="col s12">
-                <button class='btn green' type='submit'>Publish</button>
+            <div class="send">
+                <button class='btn red' type='submit'>Publicar <i class='material-icons right'>send</i></button>
             </div>
         </div>
     </form>
@@ -158,7 +158,7 @@ export default {
                         limit: Infinity,
                         minLength: 1
                     },
-                    placeholder: 'Tap the genres',
+                    placeholder: 'Escreva os gêneros',
                     onChipAdd: (event) => {
                         this.sel_genres = event[0].M_Chips.chipsData;
                     }
@@ -170,8 +170,10 @@ export default {
 </script>
 
 <style scoped>
-.col.s12 > .btn {
-   width: 100%;
-   margin-top: 2%;
+.send {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    margin-top: 3%;
 }
 </style>

@@ -65,5 +65,6 @@ export default {
     color: black;
     width: 40%;
     margin: 8% 30%;
+    text-align: center;
 }
 </style>

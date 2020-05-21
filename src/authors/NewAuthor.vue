@@ -1,25 +1,25 @@
 <template>
     <div class="container">
         <div class="row">
-            <div class="col s2"></div>
-            <div class="col s8">
-                <div class="card-panel">
-                    <h4>New Author</h4>
-                    <form @submit="createAuthor">
-                        <div class="row">
-                            <div class="col s12 input-field">
-                                <i class='material-icons prefix'>account_circle</i>
-                                <input type="text" name='name' v-model="name">
-                                <label for="name">Name</label>
-                            </div>
-                            <div class="col s12">
-                                <button type='submit' class='btn pink'>Create</button>
-                            </div>
+            <div class="card-panel">
+                <h4>Novo Autor</h4>
+                <h6>Crie um autor para ser referenciado em futuros mangas</h6>
+                <br>
+                <form @submit="createAuthor">
+                    <div class="row">
+                        <div class="col s12 input-field">
+                            <i class='material-icons prefix'>account_circle</i>
+                            <input type="text" name='name' v-model="name">
+                            <label for="name">Nome</label>
                         </div>
-                    </form>
-                </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field send">
+                            <button type='submit' class='btn red'>Criar <i class='material-icons right'>send</i></button>
+                        </div>
+                    </div>
+                </form>
             </div>
-            <div class="col s2"></div>
         </div>
         <div class="row">
             <AuthorsTable/>
@@ -53,7 +53,12 @@ export default {
 </script>
 
 <style scoped>
-.row{
-    margin: 3% !important;
+.send{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+.card-panel{
+    margin: 3% 10%;
 }
 </style>
