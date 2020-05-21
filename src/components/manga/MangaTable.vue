@@ -11,6 +11,7 @@
                 <tr v-for='(n ,i) in comics' :key='i'>
                     <td>{{n.title}}</td>
                     <td>
+                        <router-link :to="{path: '/chapters/new', query: {comic_id: n._id.$oid}}"><button class='btn blue'><i class='material-icons'>add</i></button></router-link>
                         <router-link :to="{path: '/mangas/edit', query: {comic_id: n._id.$oid}}"><button class='btn green'><i class='material-icons'>edit</i></button></router-link>
                         <button class='btn red' @click='deleteComic(n)'><i class='material-icons'>delete</i></button>
                     </td>

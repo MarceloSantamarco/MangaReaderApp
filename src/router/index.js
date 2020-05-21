@@ -9,6 +9,7 @@ import MangaAdmin from '../manga/MangaAdmin'
 import NewUser from '../user/NewUser'
 import UserPassword from '../user/UserPassword'
 import NewAuthor from '../authors/NewAuthor'
+import NewChapter from '../chapters/NewChapter'
 
 Vue.use(Router)
 export default new Router({
@@ -57,6 +58,11 @@ export default new Router({
       path: '/authors/new',
       name: 'NewAuthor',
       component: NewAuthor
+    },
+    {
+      path: '/chapters/new',
+      name: 'NewChapter',
+      component: NewChapter
     }
   ]
 })
