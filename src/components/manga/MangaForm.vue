@@ -116,7 +116,7 @@ export default {
             const comic = {
                 title: this.title, description: this.description, 
                 published_at: this.published_at, adult: this.adult, 
-                cover: `${firebase.storage().bucket_.bucket}/covers/${time}${this.cover.name}`
+                cover: `${firebase.storage().ref()}covers/${time}${this.cover.name}`
             }
 
             axios.post(`${baseApiUrl}/comics`, {comic: comic, genres: genres,
@@ -134,7 +134,6 @@ export default {
         },
         getCover(e){
             this.cover = e.target.files[0];
-            console.log(this.cover);
         },
         checkType(){
             if(this.manga){

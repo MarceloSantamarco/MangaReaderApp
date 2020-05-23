@@ -1,12 +1,12 @@
 <template>
     <div>
         <a class='dropdown-trigger' data-target='user-dropdown'>
-            <img src='../../assets/user-icon.png' height='30' width="40"/>
+            <img v-if='this.photo' :src='this.photo' height='30' width="40"/>
+            <img v-else src='../../assets/user-icon.png' height='30' width="40"/>
         </a>
 
         <ul id='user-dropdown' class='dropdown-content'>
             <li><router-link to="/mangas/new">Contribuir</router-link></li>
-            <!-- <li><UserPhoto/></li> -->
             <li><router-link to='/authors/new'>Autores</router-link></li>
             <li><router-link to='/mangas/admin'>Mangas</router-link></li>
             <li @click.prevent='logout'><a href='#'>Sair</a></li>
@@ -16,19 +16,36 @@
 
 <script>
 import M from 'materialize-css/dist/js/materialize.js'
-// import UserPhoto from '../user/UserPhoto'
-import {userKey} from '@/global'
+import firebase from 'firebase'
+import axios from 'axios'
+import {userKey, baseApiUrl} from '@/global'
 
 export default {
     name: 'UserDropdown',
-    // components: {UserPhoto},
+    data(){
+        return {
+            photo: ''
+        }
+    },
     props: ['user'],
+    mounted(){
+        this.getPhotoUrl()
+    },
     methods:{
         logout(){
             this.$store.commit('setUser', null)
             localStorage.removeItem(userKey)
             M.toast({html: 'Signed out sucessfully!', classes:'rounded green'})
             this.$router.push('/')
+        },
+        getPhotoUrl(){
+            axios.get(`${baseApiUrl}/users/${this.user.id.$oid}`).then((res)=>{
+                this.photo = res.data.photo
+                let url = this.photo.split('/')
+                firebase.storage().ref().child(`${url[3]}/${url[4]}`).getDownloadURL().then((url)=>{
+                    this.photo = url
+                })
+            })
         }
     }
 }

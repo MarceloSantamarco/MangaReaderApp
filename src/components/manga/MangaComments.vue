@@ -5,6 +5,7 @@
         </li>
         <li v-for='(com, i) in comments' :key='i' class="collection-item avatar">
             <img v-if='!com.user_id.photo' src="../../assets/user-icon.png" alt="user" class="circle">
+            <img v-else :src="com.user_id.photo" alt="user" class="circle">
             <strong><span class="title">{{com.user_id.name}}</span></strong>
             <p>{{com.text}}</p>
             <span class="secondary-content">
@@ -19,6 +20,7 @@
 import M from 'materialize-css/dist/js/materialize.js'
 import axios from 'axios'
 import {baseApiUrl} from '@/global'
+import firebase from 'firebase'
 
 export default {
     name: 'MangaComments',
@@ -34,6 +36,12 @@ export default {
     methods: {
         getComments(){
             axios.get(`${baseApiUrl}/comments?comic_id=${this.$route.query.comic_id}`).then((res)=>{
+                res.data.map((dt)=>{
+                    let url = dt.user_id.photo.split('/')
+                    firebase.storage().ref().child(`${url[3]}/${url[4]}`).getDownloadURL().then((url)=>{
+                        dt.user_id.photo = url
+                    })
+                })
                 this.comments = res.data
             })
         },
