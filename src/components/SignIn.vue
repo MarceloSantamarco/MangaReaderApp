@@ -1,7 +1,7 @@
 <template>
     <div class="card-panel">
         <h4>Bem vindo!</h4>
-        <form @submit="signin">
+        <form @submit.prevent="signin">
             <div class="row">
                 <div class="input-field col s12">
                     <input id="email" type="text" class="validate" v-model="user.email">
@@ -45,12 +45,11 @@ export default {
         }
     },
     methods: {
-        signin(e){
-            e.preventDefault()
+        signin(){
             axios.post(`${baseApiUrl}/sessions/create`, this.user).then((res)=>{
-                this.$store.commit('setUser', res.data)
+                this.$store.commit('setUser', res.data.user)
                 localStorage.setItem(userKey, JSON.stringify(res.data))
-                M.toast({html: `${res.data.success}`, classes: 'rounded green'})
+                M.toast({html: `Sucesso! Bem vindo`, classes: 'rounded green'})
                 this.$router.push('Mangas')
             }).catch((error)=>{
                 M.toast({html: `${error}`, classes: 'rounded red'})

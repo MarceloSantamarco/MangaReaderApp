@@ -85,7 +85,7 @@ export default {
         e.preventDefault()
         axios.post(`${baseApiUrl}/users`, this.user).then((res)=>{
           M.toast({html: `${res.message}`, classes: 'rounded green'})
-          this.$router.push('Mangas');
+          this.$router.push('/');
         }).catch((error)=>{
           console.log(error)
           M.toast({html: `${error}!`, classes: 'rounded red'})

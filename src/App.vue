@@ -26,9 +26,8 @@ export default {
   methods: {
     validateToken(){
       const userData = JSON.parse(localStorage.getItem(userKey))
-      
       if(userData){
-        this.$store.commit('setUser', userData['user'])
+        this.$store.commit('setUser', userData.user)
       }
     }
   }

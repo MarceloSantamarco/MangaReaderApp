@@ -34,7 +34,7 @@
                                 <span>Finalizado</span>
                             </p>
                             <br>
-                            <MangaRate v-if='comic' :comic='comic'/>
+                            <MangaRate v-if='comic' :comic='comic' :key='rateKey'/>
                             <Loader v-else/>
                         </div>
                         <div class="card-action">
@@ -45,7 +45,7 @@
                                     </span>
                                 </div>
                                 <div class="col s6">
-                                    <MangaRating v-if='comic' :comic='comic'/>
+                                    <MangaRating v-if='comic' :comic='comic' @rated='updateRate()'/>
                                     <Loader v-else/>
                                 </div>
                             </div>
@@ -84,7 +84,8 @@ export default {
             author: '',
             coverUrl: '',
             genres: {},
-            commentsKey: 0
+            commentsKey: 0,
+            rateKey: 0
         }
     },
     mounted(){
@@ -96,7 +97,8 @@ export default {
         getComic(){
             axios.get(`${baseApiUrl}/comics/${this.$route.query.comic_id}`).then((res)=>{
                 this.comic = res.data
-                firebase.storage().ref().child(res.data.cover.substr(30)).getDownloadURL().then((url)=>{
+                let url = res.data.cover.split('/')
+                firebase.storage().ref().child(`${url[3]}/${url[4]}`).getDownloadURL().then((url)=>{
                     this.coverUrl = url
                 })
             })
@@ -110,6 +112,10 @@ export default {
             axios.get(`${baseApiUrl}/comics/${this.$route.query.comic_id}/comic_genre`).then((res)=>{
                 this.genres = res.data
             })
+        },
+        updateRate(){
+            this.rateKey++;
+            this.getComic();
         }
     }
 }

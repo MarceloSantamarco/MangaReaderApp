@@ -65,7 +65,8 @@ export default {
             })
         },
         imageUrl(){
-            firebase.storage().ref().child(this.manga.cover.substr(30)).getDownloadURL().then((url)=>{
+            let url = this.manga.cover.split('/')
+            firebase.storage().ref().child(`${url[3]}/${url[4]}`).getDownloadURL().then((url)=>{
                 this.coverUrl = url
             })
         }

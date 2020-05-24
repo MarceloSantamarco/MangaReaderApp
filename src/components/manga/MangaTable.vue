@@ -27,6 +27,7 @@
 <script>
 import axios from 'axios'
 import {baseApiUrl} from '@/global'
+import firebase from 'firebase'
 import Loader from '../Loader'
 
 export default {
@@ -49,9 +50,14 @@ export default {
             })
         },
         deleteComic(n){
-            axios.delete(`${baseApiUrl}/comics/${n._id.$oid}`).then((res)=>{
-                console.log(res);
+            this.deleteFromBucket(n.cover.split('/'));
+            axios.delete(`${baseApiUrl}/comics/${n._id.$oid}`).then(()=>{
                 this.getComics();
+            })
+        },
+        deleteFromBucket(n){
+            firebase.storage().ref().child(`${n[3]}/${n[4]}`).delete().then(()=>{
+                console.log('File deleted from storage')
             })
         }
     }

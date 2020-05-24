@@ -8,12 +8,15 @@
                         <span class="new badge">3</span>
                     </div>
                     <div class="collapsible-body">
-                        <div class="collection">
+                        <div v-if='favorites.length' class="collection">
                             <a href='' v-for='(fav, i) in favorites' :key='i' class="collection-item avatar">
                                 <img :src="fav.cover" alt="cover" class='circle'>
                                 <span class="title">{{fav.title}}</span>
                                 <span class="secondary-content"><span class="new badge">4</span></span>                             
                             </a>
+                        </div>
+                        <div v-else class='empty'>
+                            Aqui você pode ver as novidades dos seus mangás favoritos!
                         </div>
                     </div>
                 </li>
@@ -79,12 +82,14 @@ export default {
     methods:{
         getFavorites(){
             axios.get(`${baseApiUrl}/user_favorites`).then((res)=>{
-                res.data.map((fav)=>{
-                    let cover = fav.cover.split('/')
-                    firebase.storage().ref().child(`${cover[1]}/${cover[2]}`).getDownloadURL().then((url)=>{
-                        fav.cover = url
+                if(res.data.length){
+                    res.data.map((fav)=>{
+                        let cover = fav.cover.split('/')
+                        firebase.storage().ref().child(`${cover[3]}/${cover[4]}`).getDownloadURL().then((url)=>{
+                            fav.cover = url
+                        })
                     })
-                })
+                }
                 this.favorites = res.data
             })
         }
@@ -108,5 +113,8 @@ export default {
 .container{
     margin-top: 10%;
     margin-bottom: 10%;
+}
+.empty{
+    text-align: center;
 }
 </style>

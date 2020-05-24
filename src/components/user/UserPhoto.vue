@@ -1,7 +1,7 @@
 <template>
     <div>
         <a class='modal-trigger tooltipped' data-position="bottom" data-tooltip="Mudar avatar" href="#modal1">
-            <img v-if='this.user.photo.length' :src="this.user.photo" alt="user" width='230'>
+            <img v-if='this.user.photo.length' :src="this.user.photo" alt="user" width='250' height='250'>
             <img v-else src="../../assets/user-icon.png" alt="user" width='230'>
         </a>
         <div id="modal1" class="modal">
@@ -60,6 +60,9 @@ export default {
         },
         getUserPhoto(){
             axios.get(`${baseApiUrl}/users/${this.$store.state.user.id.$oid}`).then((res)=>{
+                if(!res.data.photo){
+                    return
+                }
                 let photo = res.data.photo.split('/')
                 firebase.storage().ref().child(`${photo[3]}/${photo[4]}`).getDownloadURL().then((url)=>{
                     this.user.photo = url

@@ -37,6 +37,9 @@ export default {
         getComments(){
             axios.get(`${baseApiUrl}/comments?comic_id=${this.$route.query.comic_id}`).then((res)=>{
                 res.data.map((dt)=>{
+                    if(!dt.user_id.photo){
+                        return
+                    }
                     let url = dt.user_id.photo.split('/')
                     firebase.storage().ref().child(`${url[3]}/${url[4]}`).getDownloadURL().then((url)=>{
                         dt.user_id.photo = url

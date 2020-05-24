@@ -40,8 +40,10 @@ export default {
         },
         getPhotoUrl(){
             axios.get(`${baseApiUrl}/users/${this.user.id.$oid}`).then((res)=>{
-                this.photo = res.data.photo
-                let url = this.photo.split('/')
+                if(!res.data.photo){
+                    return
+                }
+                let url = res.data.photo.split('/')
                 firebase.storage().ref().child(`${url[3]}/${url[4]}`).getDownloadURL().then((url)=>{
                     this.photo = url
                 })

@@ -1,8 +1,8 @@
 <template>
-    <ul class="collapsible">
+    <ul v-if='comic' class="collapsible">
         <li>
             <div class="collapsible-header">
-                {{comic.rate}}
+                {{comic.rate.toFixed(1)}}
                 <i v-for='(n, i) in stars' :key='i' class="material-icons star">{{n}}</i>
             </div>
             <div class="collapsible-body">
@@ -17,16 +17,19 @@
                 </ul>
             </div>
         </li>
-    </ul>  
+    </ul>
+    <Loader v-else/>
 </template>
 
 <script>
 import M from 'materialize-css/dist/js/materialize.js'
 import axios from 'axios'
 import {baseApiUrl} from '@/global'
+import Loader from '../Loader'
 
 export default {
     name: 'MangaRate',
+    components: {Loader},
     props: ['comic'],
     data(){
         return {
@@ -42,7 +45,6 @@ export default {
             const comic_id = this.$route.query.comic_id
             axios.get(`${baseApiUrl}/ratings_count?comic_id=${comic_id}`).then((res)=>{
                 this.ratings = res.data
-                console.log(res.data)
             })
         }
     },

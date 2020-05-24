@@ -44,6 +44,8 @@ export default {
         rateManga(i){
             axios.post(`${baseApiUrl}/ratings`, {comic_id: this.comic._id.$oid, rate: i}).then(()=>{
                 M.toast({html: `${this.comic.title} avaliado. Obrigado!`, classess: 'roundded green'})
+                this.$emit('rated')
+                this.rate = true
                 M.Modal.getInstance(document.querySelector('.modal')).close()
             })
         },

@@ -51,8 +51,7 @@ export default {
         sendEmail(e){
             e.preventDefault();
 
-            axios.post('http://localhost:3000/users/password', this.email).then((res)=>{
-                console.log(res);
+            axios.post('http://localhost:3000/users/password', this.email).then(()=>{
                 this.message = 'Sucess! Please check your email inbox';
             }).catch((error)=>{
                 console.log(error);
