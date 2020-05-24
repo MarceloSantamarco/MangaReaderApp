@@ -30,12 +30,12 @@
                     </option>
                 </select>
             </div>
-            <div class="col s4">
+            <div class="col s3">
                 <div class="chips chips-autocomplete chips-placeholder chips-initial">
                     <input name='genres'>
                 </div>
             </div>
-            <div class="input-field col s2">
+            <div class="input-field col s3">
                 <input type="text" class="datepicker" placeholder='Publicado em...' @change="dateChanged">
             </div>
             <div class="input-field col s2">
@@ -44,6 +44,13 @@
                         <input type="checkbox" v-model='adult'>
                         <span class="lever"></span>
                         Adulto
+                    </label>
+                </div>
+                <div class="switch">
+                    <label>
+                        <input type="checkbox" v-model='status'>
+                        <span class="lever"></span>
+                        Finalizado
                     </label>
                 </div>
             </div>
@@ -100,6 +107,7 @@ export default {
             category: '',
             published_at: '',
             adult: 0,
+            status: 0,
             cover: {}
         }
     },
@@ -115,7 +123,7 @@ export default {
 
             const comic = {
                 title: this.title, description: this.description, 
-                published_at: this.published_at, adult: this.adult, 
+                published_at: this.published_at, adult: this.adult, status: this.status,
                 cover: `${firebase.storage().ref()}covers/${time}${this.cover.name}`
             }
 
@@ -157,7 +165,7 @@ export default {
                         limit: Infinity,
                         minLength: 1
                     },
-                    placeholder: 'Escreva os gêneros',
+                    placeholder: 'Digite os gêneros',
                     onChipAdd: (event) => {
                         this.sel_genres = event[0].M_Chips.chipsData;
                     }

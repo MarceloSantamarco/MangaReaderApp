@@ -31,7 +31,7 @@
                                 <span>{{author}}</span>
                             </p>
                             <p><strong>Status: </strong>
-                                <span>Finalizado</span>
+                                <span>{{comic.status ? 'Finalizado' : 'Em andamento'}}</span>
                             </p>
                             <br>
                             <MangaRate v-if='comic' :comic='comic' :key='rateKey'/>
