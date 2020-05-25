@@ -1,21 +1,40 @@
 <template>
     <ul class="collection with-header">
         <li class="collection-header">
-            <h4><i class="material-icons inline-icon">library_books</i>Chapters</h4>
+            <h4><i class="material-icons inline-icon">library_books</i>Capítulos</h4>
         </li>
-        <a v-for="n in 14" :key='n' class="collection-item" href='#'>
-            {{n}}
-            <span class='secondary-content'>27/09/2019</span>
+        <a v-for="(ch, i) in chapters" :key='i' class="collection-item" href='#'>
+            {{ch.title}}
+            <span class='secondary-content'>{{new Date(ch.created_at).toLocaleDateString()}}</span>
         </a>
     </ul>
 </template>
 
 <script>
+// import M from 'materialize-css/dist/js/materialize.js'
+import axios from 'axios'
+import {baseApiUrl} from '@/global'
+
 export default {
-    name: 'MangaChapters'
+    name: 'MangaChapters',
+    data(){
+        return {
+            chapters: []
+        }
+    },
+    mounted(){
+        this.getChapter();
+    },
+    methods: {
+        getChapter(){
+            axios.get(`${baseApiUrl}/chapters?comic_id=${this.$route.query.comic_id}`).then((res)=>{
+                this.chapters = res.data
+            })
+        }
+    }
 }
 </script>
 
-<style>
+<style scoped>
 
 </style>
