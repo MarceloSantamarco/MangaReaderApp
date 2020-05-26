@@ -5,8 +5,8 @@
         <form class='col s12' @submit.prevent='sendChapter'>
             <div class="row">
                 <div class="input-field col s6">
-                    <input type="text" name='title' v-model='chapter.title'>
-                    <label for="title">Título</label>
+                    <input type="number" name='title' v-model='chapter.title'>
+                    <label for="title">Número</label>
                 </div>
                 <div class="file-field input-field col s6">
                     <input type="file" multiple @change="setFile">
@@ -33,7 +33,7 @@ export default {
     data(){
         return {
             chapter: {
-                title: '',
+                title: null,
                 folder: ''
             },
             fileList: []
