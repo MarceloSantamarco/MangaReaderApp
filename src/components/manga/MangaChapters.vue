@@ -3,10 +3,10 @@
         <li class="collection-header">
             <h4><i class="material-icons inline-icon">library_books</i>Capítulos</h4>
         </li>
-        <a v-for="(ch, i) in chapters" :key='i' class="collection-item" href='#'>
+        <router-link v-for="(ch, i) in chapters" :key='i' class="collection-item" :to="{path: '/chapters/show', query: {chapter_id: ch._id.$oid}} ">
             {{ch.title}}
             <span class='secondary-content'>{{new Date(ch.created_at).toLocaleDateString()}}</span>
-        </a>
+        </router-link>
     </ul>
 </template>
 

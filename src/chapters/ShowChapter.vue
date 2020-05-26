@@ -1,0 +1,101 @@
+<template>
+    <div class='container'>
+        <div class="head">
+            <div class="row">
+                <div class="col s4">
+                    <button class='btn red waves waves-effect' @click='currentPageNumber <= 0 ? false : currentPageNumber--'><i class='material-icons'>chevron_left</i></button>
+                </div>
+                <div class="col s4">
+                    <select class='browser-default' v-model='currentPageNumber'>
+                        <option selected value="0">0</option>
+                        <option v-for='i in pages.length-1' :key='i' :value="i">
+                            {{i}}
+                        </option>
+                    </select>
+                </div>
+                <div class="col s4">
+                    <button class='btn red waves waves-effect' @click='currentPageNumber >= pages.length-1 ? false : currentPageNumber++'><i class='material-icons'>chevron_right</i></button>
+                </div>
+            </div>
+        </div>
+        <div class="page" id='crossfade'>
+            <a @click='pageClick'>
+                <img :src="pages[currentPageNumber]" alt="page" width='800' height='1100'>
+            </a>
+        </div>
+    </div>
+</template>
+
+<script>
+import axios from 'axios'
+import {baseApiUrl} from '@/global'
+import M from 'materialize-css/dist/js/materialize.js'
+import firebase from 'firebase'
+
+export default {
+    name: 'ShowChapter',
+    data(){
+        return {
+            chapter: {},
+            pages: [],
+            currentPageNumber: 0,
+        }
+    },
+    created(){
+        this.getChapter();
+    },
+    mounted(){
+        M.FormSelect.init(document.querySelectorAll('select'));
+    },
+    methods:{
+        getChapter(){
+            axios.get(`${baseApiUrl}/chapters/${this.$route.query.chapter_id}`).then((res)=>{
+                this.chapter = res.data
+                this.getPages();
+            })
+        },
+        getPages(){
+            let url = this.chapter.folder.split('/')
+            const ref = firebase.storage().ref()
+            ref.child(`/${url[3]}/${url[4]}/${url[5]}`).listAll().then((reference)=>{
+                this.getUrl(reference);
+            })
+        },
+        getUrl(reference){
+            const ref = firebase.storage().ref()
+            reference.items.map((item)=>{
+                ref.child(item.fullPath).getDownloadURL().then((url)=>{
+                    this.pages.push(url)
+                    this.pages.sort()
+                })
+            })
+        },
+        pageClick(){
+            if(this.currentPageNumber >= this.pages.length-1){
+                this.callToast()
+                return
+            }
+            this.currentPageNumber++
+            setTimeout(()=>{window.scrollTo(0, 100)}, 300)
+        },
+        callToast(){
+            let toastHTML = '<span>Este capítulo chegou ao fim!</span><button class="btn-flat toast-action">Ir para o próximo</button>';
+            M.toast({html: toastHTML});
+        }
+    }
+}
+</script>
+
+<style scoped>
+.select-wrapper{
+    background-color: #FFF !important;
+    border-radius: 2% !important;
+}
+.head{
+    margin: 6% 3%;
+}
+.page{
+    background-color: rgba(18, 46, 71, 0.2);
+    padding: 2% 0%;
+}
+</style>

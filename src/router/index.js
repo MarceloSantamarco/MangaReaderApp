@@ -10,6 +10,7 @@ import NewUser from '../user/NewUser'
 import UserPassword from '../user/UserPassword'
 import NewAuthor from '../authors/NewAuthor'
 import NewChapter from '../chapters/NewChapter'
+import ShowChapter from '../chapters/ShowChapter'
 
 Vue.use(Router)
 export default new Router({
@@ -63,6 +64,11 @@ export default new Router({
       path: '/chapters/new',
       name: 'NewChapter',
       component: NewChapter
+    },
+    {
+      path: '/chapters/show',
+      name: 'ShowChapter',
+      component: ShowChapter
     }
   ]
 })
