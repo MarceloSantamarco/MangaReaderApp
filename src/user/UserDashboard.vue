@@ -2,18 +2,17 @@
     <div class='container'>
         <div class="favorites">
             <ul class="collapsible">
-                <li>
+                <li class='active'>
                     <div class="collapsible-header">
                         Favoritos
-                        <span class="new badge">3</span>
                     </div>
                     <div class="collapsible-body">
                         <div v-if='favorites.length' class="collection">
-                            <a href='' v-for='(fav, i) in favorites' :key='i' class="collection-item avatar">
-                                <img :src="fav.cover" alt="cover" class='circle'>
-                                <span class="title">{{fav.title}}</span>
-                                <span class="secondary-content"><span class="new badge">4</span></span>                             
-                            </a>
+                            <router-link :to="{path: 'mangas/show', query: {comic_id: fav.comic._id.$oid}}" v-for='(fav, i) in favorites' :key='i' class="collection-item avatar">
+                                <img :src="fav.comic.cover" alt="cover" class='circle'>
+                                <span class="title">{{fav.comic.title}}</span>
+                                <span class="secondary-content"><span class="badge green">Capítulo {{fav.chapter}}</span></span>                             
+                            </router-link>
                         </div>
                         <div v-else class='empty'>
                             Aqui você pode ver as novidades dos seus mangás favoritos!
@@ -81,12 +80,12 @@ export default {
     },
     methods:{
         getFavorites(){
-            axios.get(`${baseApiUrl}/user_favorites`).then((res)=>{
+            axios.get(`${baseApiUrl}/user_time_line`).then((res)=>{
                 if(res.data.length){
                     res.data.map((fav)=>{
-                        let cover = fav.cover.split('/')
+                        let cover = fav.comic.cover.split('/')
                         firebase.storage().ref().child(`${cover[3]}/${cover[4]}`).getDownloadURL().then((url)=>{
-                            fav.cover = url
+                            fav.comic.cover = url
                         })
                     })
                 }

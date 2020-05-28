@@ -5,7 +5,7 @@
         </li>
         <router-link v-for="(ch, i) in chapters" :key='i' class="collection-item" :to="{path: '/chapters/show', query: {chapter_id: ch._id.$oid, comic_id: comicId}} ">
             {{ch.title}}
-            <span class='secondary-content'>{{new Date(ch.created_at).toLocaleDateString()}}</span>
+            <span class='secondary-content'>{{new Date(ch.created_at).toLocaleDateString('pt-BR', {timeZone: 'UTC'})}}</span>
         </router-link>
     </ul>
 </template>

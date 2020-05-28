@@ -10,7 +10,7 @@
             <p>{{com.text}}</p>
             <span class="secondary-content">
                 <i v-if='user && (com.user_id.email == user.email)' @click='deleteComment(com)' class='material-icons' style='color: red'>delete</i>
-                <span v-else>{{new Date(com.created_at).toLocaleDateString()}}</span>
+                <span v-else>{{new Date(com.created_at).toLocaleDateString('pt-BR', {timeZone: 'UTC'})}}</span>
             </span>
         </li>
     </ul>  

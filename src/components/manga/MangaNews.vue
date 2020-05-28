@@ -1,8 +1,10 @@
 <template>
     <div>
-        <DataFilters :type='"comic"' @search='changeComic'/>
-        <div v-for='(n, i) in order.length' :key='i' class='row center-cols center-align'>
-            <div v-for='(manga, idx) in order[i]' :key='idx' class="col s3">
+        <div v-for='day in Object.keys(comics)' :key='day' class='day'>
+            <div class="badge">
+                {{new Date(day).toLocaleDateString('pt-BR', {timeZone: 'UTC'})}}
+            </div>
+            <div v-for='(manga, idx) in comics[day]' :key='idx' class="column">
                 <MangaCard :manga='manga'/> 
             </div>
         </div>
@@ -10,48 +12,52 @@
 </template>
 
 <script>
-import DataFilters from '../DataFilters'
 import MangaCard from './MangaCard'
 
 export default {
-    name: 'MangaNews',
-    components: {DataFilters, MangaCard},
-    props: ['comics'],
-    mounted(){
-        this.sortComics(this.comics);
-    },
-    data(){
-        return {
-            order: []
-        }
-    },
-    methods: {
-        changeComic(e){
-            if(e[0]){
-                this.sortComics(e)
-            }
-            else{
-                this.sortComics(this.comics)
-            }
-        },
-        sortComics(comics){
-            let aux = [];
-            while(comics.length){
-                if(comics.length > 4){
-                    aux.push(comics.slice(0, 4))
-                    comics.splice(0,4)
-                }
-                else{
-                    aux.push(comics)
-                    break;
-                }
-            }
-            this.order = aux
-        }
-    }
+    name: 'MangaAll',
+    components: {MangaCard},
+    props: ['comics']
 }
 </script>
 
 <style scoped>
-
+*{
+  box-sizing: border-box;
+}
+.badge{
+    font-size: 20px;
+    font-weight: bold;
+    color: #FFF;
+    background-color: #e91e63;
+    margin: 2% 1%;
+    border-radius: 5%;
+}
+.column{
+  float: left;
+  width: 25%;
+  padding: 0 10px;
+}
+.day{
+    margin: 0 -5px;
+}
+.day:after{
+  content: "";
+  display: table;
+  clear: both;
+}
+@media screen and (max-width: 1000px) {
+  .column {
+    width: 50%;
+    display: block;
+    margin-bottom: 20px;
+  }
+}
+@media screen and (max-width: 600px) {
+  .column {
+    width: 100%;
+    display: block;
+    margin-bottom: 20px;
+  }
+}
 </style>

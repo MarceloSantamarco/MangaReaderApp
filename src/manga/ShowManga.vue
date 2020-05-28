@@ -146,4 +146,7 @@ export default {
     padding-left: 0.5%;
     margin-right: 1%;
 }
+img{
+    border-radius: 4% !important;
+}
 </style>

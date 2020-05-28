@@ -68,7 +68,6 @@ export default {
         getChapter(chapter_id){
             axios.get(`${baseApiUrl}/chapters/${chapter_id}`).then((res)=>{
                 this.chapter = res.data
-                this.currentChapter = res.data.title
                 this.getPages();
             })
         },

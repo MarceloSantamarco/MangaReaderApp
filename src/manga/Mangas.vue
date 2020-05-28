@@ -3,13 +3,18 @@
         <div v-if='Object.keys(comics).length'>
             <ul class="tabs">
                 <li class="tab col s4"><a class="active" href="#news">Novidades</a></li>
+                <li class="tab col s4"><a href="#all">Todos</a></li>
                 <li class="tab col s4"><a href="#categories">Categorias</a></li>
                 <li class="tab col s4"><a href="#genres">Gêneros</a></li>
                 <li class="tab col s4"><a href="#authors">Autores</a></li>
             </ul>
 
             <div id="news">
-                <MangaNews :comics='comics' :key='componentKey'/>
+                <MangaNews :comics='comicNews' :key='componentKey'/>
+            </div>
+
+            <div id="all">
+                <MangaAll :comics='comics' :key='componentKey'/>
             </div>
 
             <div id="categories">
@@ -32,6 +37,7 @@
 
 <script>
 import M from 'materialize-css/dist/js/materialize.js'
+import MangaAll from '../components/manga/MangaAll'
 import MangaNews from '../components/manga/MangaNews'
 import Loader from '../components/Loader'
 import LinkRows from '../components/LinkRows'
@@ -40,12 +46,13 @@ import {baseApiUrl} from '@/global'
 
 export default {
     name: 'Mangas',
-    components: {Loader, MangaNews, LinkRows},
+    components: {Loader, MangaAll, MangaNews, LinkRows},
     mounted(){
         this.getCategories();
         this.getGenres();
         this.getAuthors();
         this.getComics();
+        this.getComicNews();
     },
     data(){
         return {
@@ -53,6 +60,7 @@ export default {
             genres: {},
             authors: {},
             comics: {},
+            comicNews: {},
             componentKey: 0
         }
     },
@@ -81,6 +89,13 @@ export default {
         getComics(){
             axios.get(`${baseApiUrl}/comics`).then((res)=>{
                 this.comics = res.data
+            }).catch((error)=>{
+                console.log(error)
+            })
+        },
+        getComicNews(){
+            axios.get(`${baseApiUrl}/time_line`).then((res)=>{
+                this.comicNews = res.data
             }).catch((error)=>{
                 console.log(error)
             })
