@@ -43,7 +43,7 @@ import axios from 'axios'
 import {baseApiUrl} from '@/global'
 import M from 'materialize-css/dist/js/materialize.js'
 import firebase from 'firebase'
-import Loader from '../components/Loader'
+import Loader from '../../components/Loader'
 
 export default {
     name: 'ShowChapter',

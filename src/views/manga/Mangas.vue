@@ -37,10 +37,10 @@
 
 <script>
 import M from 'materialize-css/dist/js/materialize.js'
-import MangaAll from '../components/manga/MangaAll'
-import MangaNews from '../components/manga/MangaNews'
-import Loader from '../components/Loader'
-import LinkRows from '../components/LinkRows'
+import MangaAll from '../../components/manga/MangaAll'
+import MangaNews from '../../components/manga/MangaNews'
+import Loader from '../../components/Loader'
+import LinkRows from '../../components/LinkRows'
 import axios from 'axios'
 import {baseApiUrl} from '@/global'
 

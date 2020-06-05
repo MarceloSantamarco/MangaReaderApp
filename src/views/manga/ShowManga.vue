@@ -67,13 +67,13 @@
 import axios from 'axios'
 import firebase from 'firebase'
 import {baseApiUrl} from '@/global'
-import MangaChapters from '../components/manga/MangaChapters'
-import MangaComments from '../components/manga/MangaComments'
-import MangaFavorite from '../components/manga/MangaFavorite'
-import MangaRate from '../components/manga/MangaRate'
-import MangaRating from '../components/manga/MangaRating'
-import NewComment from '../components/comments/NewComment'
-import Loader from '../components/Loader'
+import MangaChapters from '../../components/manga/MangaChapters'
+import MangaComments from '../../components/manga/MangaComments'
+import MangaFavorite from '../../components/manga/MangaFavorite'
+import MangaRate from '../../components/manga/MangaRate'
+import MangaRating from '../../components/manga/MangaRating'
+import NewComment from '../../components/comments/NewComment'
+import Loader from '../../components/Loader'
 
 export default {
     name: 'ShowManga',

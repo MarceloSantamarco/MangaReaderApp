@@ -17,8 +17,8 @@
 </template>
 
 <script>
-import Loader from '../components/Loader'
-import MangaForm from '../components/manga/MangaForm'
+import Loader from '../../components/Loader'
+import MangaForm from '../../components/manga/MangaForm'
 import {baseApiUrl} from '@/global'
 import axios from 'axios'
 

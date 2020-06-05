@@ -17,7 +17,6 @@
 </template>
 
 <script>
-// import M from 'materialize-css/dist/js/materialize.js'
 import UserPhoto from './UserPhoto'
 
 export default {

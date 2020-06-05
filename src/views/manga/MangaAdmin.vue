@@ -8,8 +8,8 @@
 </template>
 
 <script>
-import MangaTable from '../components/manga/MangaTable'
-import DataFilters from '../components/DataFilters'
+import MangaTable from '../../components/manga/MangaTable'
+import DataFilters from '../../components/DataFilters'
 
 export default {
     name: 'MangaAdmin',

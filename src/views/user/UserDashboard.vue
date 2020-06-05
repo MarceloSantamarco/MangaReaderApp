@@ -31,7 +31,7 @@
                     <div class="collapsible-body">
                         <ul class="collection">
                             <li v-for='i in 3' :key='i' class="collection-item avatar">
-                                <img src="../assets/user-icon.png" alt="cover" class='circle'>
+                                <img src="../../assets/user-icon.png" alt="cover" class='circle'>
                                 <span class="title">Title</span>
                                 <a href="#!" class="secondary-content"><span class="badge green">{{i*2}}%</span></a>
                             </li>

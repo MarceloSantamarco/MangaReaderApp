@@ -8,9 +8,9 @@
 </template>
 
 <script>
-import SignIn from './components/SignIn'
-import UserDashboard from './user/UserDashboard'
-import UserNavbar from './components/user/UserNavbar'
+import SignIn from './user/SignIn'
+import UserDashboard from '../views/user/UserDashboard'
+import UserNavbar from './user/UserNavbar'
 
 export default {
     name: 'Home',

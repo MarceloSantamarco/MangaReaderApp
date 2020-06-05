@@ -29,7 +29,7 @@
 
 <script>
 import axios from 'axios'
-import AuthorsTable from '../components/authors/AuthorsTable'
+import AuthorsTable from '../../components/authors/AuthorsTable'
 import {baseApiUrl} from '@/global'
 
 export default {
