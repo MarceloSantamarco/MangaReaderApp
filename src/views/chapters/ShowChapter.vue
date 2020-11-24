@@ -63,8 +63,15 @@ export default {
     },
     mounted(){
         M.FormSelect.init(document.querySelectorAll('select'));
+        this.createMostRead();
     },
     methods:{
+        createMostRead(){
+            let data = {comic_id: this.$route.query.comic_id, user_id: this.$store.state.user.id.$oid}
+            axios.post(`${baseApiUrl}/most_read`, data).then((res)=>{
+                console.log(res.data)
+            })
+        },
         getChapter(chapter_id){
             axios.get(`${baseApiUrl}/chapters/${chapter_id}`).then((res)=>{
                 this.chapter = res.data

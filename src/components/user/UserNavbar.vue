@@ -8,20 +8,56 @@
         <div class="row favorites">
             <i class='material-icons left'>book</i>
             <h5>Mais lidos</h5>
-            <ul v-if='mostRead'>
-                <li v-for='i in 5' :key='i'>favorito {{i}}</li>
+            <ul v-if='Object.keys(mostRead).length'>
+                <li v-for='(n, i) in comics' :key='i'>
+                    <a href="">
+                        <img :src='n.cover' alt='cover' height='70' width='70'/>
+                        <span>{{n.title}}</span>
+                    </a>
+                </li>
             </ul>
-            <p v-else style='padding-top: 5%;'>Read something to view this section ;)</p>
+            <p v-else style='padding-top: 5%;'>Read something to seer this section ;)</p>
         </div>
     </div>
 </template>
 
 <script>
+import firebase from 'firebase'
 import UserPhoto from './UserPhoto'
+import axios from 'axios'
+import {baseApiUrl} from '@/global'
 
 export default {
     name: 'UserNavbar',
-    components:{UserPhoto}
+    components:{UserPhoto},
+    data(){
+        return {
+            mostRead: {},
+            comics: []
+        }
+    },
+    mounted(){
+        this.getMostRead();
+    },
+    methods: {
+        getMostRead(){
+            axios.get(`${baseApiUrl}/most_read`).then((res)=>{
+                this.mostRead = res.data
+                this.getComics(res.data)
+            })
+        },
+        getComics(data){
+            data.map((obj)=>{
+                axios.get(`${baseApiUrl}/comics/${obj[0].$oid}`).then((res)=>{
+                    let photo = res.data.cover.split('/')
+                    firebase.storage().ref().child(`${photo[3]}/${photo[4]}`).getDownloadURL().then((url)=>{
+                        res.data.cover = url
+                    })
+                    this.comics.push(res.data)
+                })
+            })
+        }
+    }
 }
 </script>
 
